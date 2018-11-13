@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+    <script>
+
+    // CONTROL STRUCTURES
+    // if, else if, else
+    let age = 21;        
+    if (age >= 21){
+        console.log("I'm and adult")
+    } else if (age > 13) {
+        console.log("I'm a teenager")
+    } else {
+        console.log("I'm a child")
+    };
+
+    // Ternary
+    age = 20;
+    let allowed = age > 18 ? true : false;
+    // console.log(allowed);
+
+    // Switch Statements
+    let fav_bird = "Robin";
+    switch(fav_bird.toLowerCase()) {
+        case "crow":
+            console.log("You like crows");
+            break;
+        case "robin":
+            console.log("You like robins");
+            break;
+        default:
+            console.log("Don't know that bird");
+    }
+    
+    // LOOPS
+    // While
+    i = 3
+    while (i > 0) {
+        // console.log(i);
+        i--;
+    }
+
+    // DO... While
+    // let input = "blue";
+    // do {
+    //     fav_colour = prompt("What's your favourite color?");
+    // } while(fav_colour.toLowerCase() !== "blue");
+
+    // for
+    for (let i = 0; i <= 10; i+= 2) {
+        // console.log(i)
+    }
+
+    // for of
+    // for (let value of my_array) { }
+
+    // my_array.forEach(function(value, index) { console.log(value, index) });
+    // my_array.forEach((value, index) => console.log(value, index));
+
+    let cohort = {
+        name: "Fast Track",
+        students: 26,
+        teacher: "Garret"
+    };
+
+    // for in
+    for (let key in cohort) { console.log(key, cohort[key]); }
+
+    for(let k = 9; k > 0; k--) {
+        if (k % 5 === 0) { break; }
+        console.log(k);
+    }
+    // console.log(k) let is 
+    </script>
+</body>
+</html>
