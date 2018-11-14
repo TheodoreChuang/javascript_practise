@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+    <script>
+    // OBJECTS
+    // Object Constructor Function
+    function Person(name, age) {
+        this.name = name;
+        this.age = age;
+        this.awesome = true;
+    }
+    let student = new Person("Sarah", 24);
+    // Person.country = “Australia”;  // does not add
+
+
+    // PROTOTYPES
+    Person.prototype.country = "Australia"; // adds to __proto__, inherited, not as direct property
+    student.country = "USA";  // direct properties override proto of same name
+
+    function Hero(name, level) {
+        this.name = name;
+        this.level = level;
+        // this.shout = function() {               // not DRY
+        //     return `My name is ${this.name}`;
+        // }
+    }
+    Hero.prototype.shout = function() {            // recommended way, DRY due to inheritance
+        return `My name is ${this.name}`;
+    }
+    let conan = new Hero("Conan", 100);
+    let batman = new Hero("Batman", 60);
+
+
+    // Mimic Inheritance through Prototype Chain
+    function Human(){
+        this.legs = 2;
+        this.arms = 2;
+        this.head = 1;
+    }
+    Human.prototype.walk = function() {
+        return `I'm taking a stroll with my ${this.legs} legs`;
+    }
+
+    function Man(name){
+        Human.call(this);       // copy properties directly onto object, but not its proto
+        this.name = name;
+    }
+    let steve = new Man("Steve");
+    // steve.walk();               // undefined, not inherited
+    Man.prototype = Object.create(Human.prototype);     // adding to proto chain
+    let bob = new Man("Bob");
+    bob.walk();                 // works
+    // steve.walk();               // undefined, not inherited
+
+
+    // Class abstracts away Object Constructor Function
+    class Triangle {
+
+    }
+    let triangle = new Triangle();
+
+
+    class Rectangle {
+        constructor(height, width) {
+            this.height = height;
+            this.width = width;
+        }
+    }
+    let r = new Rectangle(20, 10);
+
+
+    class House {
+        // static method only on Class, not on instances
+        static unlock(secretPassphrase) {
+            if (secretPassphrase === "please") {
+                return "ok";
+            } else {
+                return "wrong";
+            }
+        }
+        key() {
+            return House.unlock('please');
+        }
+    }
+    let myHouse = new House();
+    // myHouse.unlock()     // undefined, static methods
+    myHouse.key()
+
+
+    class Shape {
+        constructor(height, width) {
+            this.height = height;
+            this.width = width;
+        }
+        // prototype method
+        area() {
+            return this.height * this.width;
+        }
+    }
+    Shape.prototype.colour = "red";     // static properties
+    Shape.measurement = "cm";           // static properties
+    let s = new Shape(10, 50);
+
+    // Extends prototype and properties
+    // super calls constructor of parent Class. methods from parent
+    class Square extends Shape {
+        constructor(height, width) {
+            super(height, width);
+        }
+        isSquare() {
+            return this.height === this.width
+        }
+    }
+    Shape.prototype.talk = input => { console.log(`I'm a talking ${input}`) }
+
+    class Octagon extends Shape {
+        constructor(h,w) {
+            super(h, w);
+        }
+        speak() {
+            super.talk("octagon");
+        }
+    }
+    let oct = new Octagon(4, 9);
+    oct.speak();
+
+
+    // HOISTING
+    // console.log(p)      // p undefined
+    const p = myFunction();
+    
+    function myFunction() {
+        return "I am a p";
+    }
+
+    console.log(p)      // runs due to hoisting
+        
+
+    let classObj = new NotHoist;
+    class NotHoist {
+
+
+    </script>
+</body>
+</html>
