@@ -1,0 +1,158 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Canvas JS Classes-Dogs of Sydney</title>
+</head>
+<body>
+	<h1>Dogs of Sydney</h1>
+	<div>
+		<!-- Adds Dogs -->
+		<button onclick="">Add your Dog</button>
+		<label>Name:</label>
+		<input id="addDogNameInput" type="text">
+		<label>Location:</label>
+		<input id="addDogLocationInput" type="text">
+	</div>
+
+	<!-- <div> -->
+		<ul></ul>
+	<!-- </div> -->
+
+<script>
+//// Challenge
+// Create a Dog class. Each dog should have a name and a location.
+// Add a speak method that logs "Woof! my name is {name}"
+// Add a walk method that accepts two arguments: location (string) and distance (integer)
+// Add a display_walks method that console.logs all of the dog's walks
+// Add a total_distance method that returns the total distance of all the walks
+// Research: what's the difference between console.log and return? Make sure you have a solid understanding
+
+// Object Constructor Function - Dogga
+function DogConstructorFunction(name, location, walks) {
+  this.name = name;
+	this.location = location;
+	this.walks = walks || [];
+}
+DogConstructorFunction.prototype.speak = function() { 
+	console.log(`Woof! my name is ${this.name}`) 
+};
+// DogConstructorFunction.prototype.walk = function(location, distance) { 
+// 	let walk = {
+// 		location,
+// 		distance
+// 	}
+// 	this.walks.push(walk);
+// };
+DogConstructorFunction.prototype.walk = function(location, distance) {
+	let walk = new Walk(location, distance);
+	this.walks.push(walk);
+};
+DogConstructorFunction.prototype.display_walks = function() {
+	this.walks.forEach(function(walk, i){
+		console.log(`${this.name} walked ${walk.distance} at ${walk.location}`) 
+	})
+};
+DogConstructorFunction.prototype.total_distance = function() {
+	let total_distance = 0;
+	this.walks.forEach( walk => { total_distance += walk.distance })
+	return total_distance
+};
+
+let dogga = new DogConstructorFunction("dogga", "Aus", [{location: "SW", distance: 10}, {location: "TL", distance: 8}]);
+
+
+
+// Class Syntax - Doggo
+class Dog {
+  constructor(name, location, walks) {
+    this.name = name;
+		this.location = location;
+		this.walks = walks || [];
+	}
+	speak() { 
+		console.log(`Woof! my name is ${this.name}`) 
+	};
+	// walk(location, distance) { 
+	// 	let walk = {
+	// 		location,
+	// 		distance
+	// 	}
+	// 	this.walks.push(walk);
+	// };
+	walk(location, distance) {
+		let walk = new Walk(location, distance)
+		this.walks.push(walk)
+	} 
+	display_walks() {
+		let name = this.name
+		this.walks.forEach(function(walk, i){
+			console.log(`${name} walked ${walk.distance} at ${walk.location}`) 
+		})
+	}
+	total_distance() {
+		let total_distance = 0;
+		this.walks.forEach( walk => { total_distance += walk.distance });
+		return total_distance;
+	}
+}
+
+let doggo = new Dog("doggo", "Can", [{location: "SW", distance: 10}, {location: "TL", distance: 8}]);
+
+//// Beast Mode
+// Create a Walk class with properties: location and distance
+// Update your Dog class: when the walk method is called, use this new Walk class to create a walk
+// Introduce a timestamp to each walk, automatically add the current time when you instantiate a walk
+
+class Walk {
+	constructor(location, distance) {
+		this.walk = {
+			location,
+			distance,
+			timestamp: new Date
+		}
+	return this.walk;
+	}
+}
+dogga.walk("Bay", 8)
+doggo.walk("Bay", 8)
+
+//// Beast Mode++
+// Create a basic GUI in the browser to interact with your classes. 'Add' button, prompts and lists to create and display dogs
+// Add walks to the GUI. I.e. add a `New Walk` button to each dog and display their walks under their name.  
+let dogModel = {
+	dogsList: [],
+	addDog: function(name, location, walks) {
+		let dog = new Dog(name, location, walks);
+		this.dogsList.push(dog);
+	}
+}
+
+let dogController = {
+	addDog: function() {
+		let addDogNameInput = document.getElementById('addDogNameInput');
+		let addDogLocationInput = document.getElementById('addDogLocationInput');
+		dogModel.addDog(addDogNameInput.value, addDogLocationInput.value);
+		dogView.displayDogs();
+	}
+}
+
+let dogView = {
+	displayDogs: function() {
+		let dogsUl = document.querySelector('ul');
+		
+		dogModel.dogsList.forEach(function(dog){
+			let dogLi = document.createElement('li');
+			dogLi.textContent = dog.name;
+			dogsUl.appendChild(dogLi);
+		});
+	}
+}
+
+let dogsUl = document.querySelector('ul');
+let dogLi = document.createElement('li');
+dogLi.innerHTML = "test dog";
+dogsUl.appendChild(dogLi);
+</script>
+</body>
+</html>
