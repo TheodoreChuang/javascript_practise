@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+<script>
+
+// Lexical Scope
+function myDog(){
+  var dog = "Fido";
+  console.log(dog);  // "Fido"
+}
+myDog();
+console.log(dog)  // dog undefined
+
+
+// Avoid Mutating State
+let cat = "Fluffy"
+
+function haircut(dog) {
+  cat = "Hairless";
+  console.log(dog)  // "Fluffy"
+}
+haircut(cat);
+console.log(cat);   // "Hairless"
+
+
+// Nested Function
+function parentFunc(a) {
+  let b = 1;
+
+  function nestedFunc(d, e) {
+    return d + e;
+  }
+  return nestedFunc(a, b);
+}
+
+let answer = parentFunc(5, 9);
+console.log(answer); // 6
+
+// Nested Function 2 - lexical scope
+let f;
+function parentFunc2(a) {
+  let b = 1;
+  f = 10;
+
+  function nestedFunc2(d) {
+    return d + b + a;
+  }
+  return nestedFunc2(a);
+}
+
+let answer = parentFunc2(5);
+console.log(answer); // 11
+console.log(f); // 10
+
+
+// CLOSURE
+function makeAdder(a) {
+  return function(b) {
+    return function(c) {
+      return a + b + c;
+    }
+  }
+}
+let addFive = makeAdder(5);   // a
+let addFivePlusEight = addFive(8);    // b
+let answer = addFivePlusEight(10);    // c
+console.log(answer);    // 23
+
+
+</script>
+</body>
+</html>

@@ -127,19 +127,48 @@
     oct.speak();
 
 
-    // HOISTING
-    // console.log(p)      // p undefined
-    const p = myFunction();
-    
-    function myFunction() {
-        return "I am a p";
+    // Mimic Multiple Inheritance with Mixin (closure)
+    let humanMixin = function(Base){
+        return class extends Base {
+            walk() {
+                return `I like walking`;
+            }
+        }
     }
 
-    console.log(p)      // runs due to hoisting
-        
+    let calculatorMixin = function(Base){
+        return class extends Base {
+            area() {
+                return this.width * this.height;
+            }
+        }
+    }
 
-    let classObj = new NotHoist;
-    class NotHoist {
+    class Shape {
+        constructor(height, width) {
+            this.height = height;
+            this.width = width;
+        }
+        talk(input) {
+            return `Hey I am a talking ${input}`
+        }
+    } 
+
+    class Square extends humanMixin(calculatorMixin(Shape)) {
+        constructor(height, width) {
+            super(height, width);
+        }
+        shout() {
+            return super.talk("square") + "!";
+        }
+    }
+
+    let square = new Square(10, 10);
+
+    console.log(square.height, square.width);
+    console.log(square.shout());
+    console.log(square.area());
+    console.log(square.walk());
 
 
     </script>

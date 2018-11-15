@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+<script>
+
+// HOISTING
+// console.log(p)      // p undefined
+const p = myFunction();
+
+function myFunction() {
+    return "I am a p";
+}
+
+console.log(p)      // runs due to hoisting
+
+let classObj = new NotHoist;
+
+
+// JS
+let cohort = [
+  { name: "K. West", nickname: "Ye", dateOfBirth: "1977-06-08"},
+  { name: "A. Grham", nickname: "Drake", dateOfBirth: "1986-10-24"},
+]
+JSON.stringify(cohort);
+
+// JSON
+let jsonCohort = "[{ \"name\": \"K. West\", \"nickname\": \"Ye\", \"dateOfBirth\": \"1977-06-08\"},{ \"name\": \"A. Grham\", \"nickname\": \"Drake\", \"dateOfBirth\": \"1986-10-24\"}]";
+let parseCohort= JSON.parse(jsonCohort)
+console.log(parseCohort[0].name)
+
+</script>
+</body>
+</html>

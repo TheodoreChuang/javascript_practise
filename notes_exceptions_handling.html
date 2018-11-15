@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+<script>
+
+// Exception Handling
+throw "my error";
+throw 42;
+throw { message: "Error", status: 500 };
+throw ["error", 500];
+
+function CustomError(message) {
+  this.message = message;
+  this.name = "CustomError";
+}
+throw new CustomError("something went wrong");
+
+
+try {
+  console.log("try block ran");
+  throw "oops";
+  console.log("this never runs")
+} catch (error) {
+  console.log(`Caught the error: ${error}`)
+} finally {
+  console.log("fiinally block ran");
+}
+
+
+try {
+  console.log(1)
+  try {
+    console.log(2);
+    throw "e";
+  } catch (err) {   // catches throw "e"
+    console.log(3);
+    throw "i";    // throw within catch
+  }
+} catch (error) {
+  console.log(`error ${error}`) // catches throw "i"
+}
+
+
+function subtractTwoThings(thing1, thing2){
+  let answer;
+
+  try {
+    answer = thing1 - thing2;
+    if(isNaN(answer)) {
+      throw 'Invalid input';
+    }
+
+    return answer;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+let calculation = subtractTwoThings(43, 10);
+
+
+function subtractTwoThings(thing1, thing2){
+  let answer;
+  answer = thing1 - thing2;
+  if(isNaN(answer)) {
+    throw 'Invalid input';
+  }
+  // ...more error checks...
+  return answer;
+}
+
+//// generalized catch out for errors
+try {
+  let calculation = subtractTwoThings(43, "bob");
+  console.log(calculation)
+} catch(error) {
+  console.log(error)
+}
+
+
+// CustomErrors Extends JS built-in Error Object
+class CustomError extends Error {
+  constructor(...params) {  // ...rest into array
+    super(...params);       // ...spread
+    this.name = "CustomError";
+
+      // optional, to capture stack trace
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, CustomError);
+    }
+  }
+}
+
+try {
+  throw new CustomError("my error");
+} catch(error) {
+  console.log(error.name);
+  console.log(error.message);
+  console.log(error.stack);
+}
+
+</script>
+</body>
+</html>
