@@ -148,15 +148,29 @@ let users = [
 // 3. Movies that have equal watchlist count, should be ordered alphabetically.
 
 function topWatchlistedMoviesAmongFriends(userId) {
+  // get user
+  let user = null;
+  users.forEach(function(useri){
+    if(useri["userId"] === userId) {
+      user = useri;
+    } 
+  });
   // get user's friends
-  let user = users[userId]
-  console.log(user)
   let friends = user.friends;
+  // for each movie, check if friend is on watchlist
+  let watchlistMovies = [];
+
+  let friend = 7001;
+  movies.forEach(function(movie) {
+    movie.watchlist // array
+
+  });
   // for each friend, iterate through movies list and grab their movies
   // tally count for every unique movie
   // sort most watchlist, if tie order alphabetically
 }
-console.log(topWatchlistedMoviesAmongFriends(15291))
+topWatchlistedMoviesAmongFriends(62289)
+
 </script>
 </body>
 </html>

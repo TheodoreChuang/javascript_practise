@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Callbacks & JSON</title>
+
+  </head>
+  <body>
+
+    <p>Empty HTML doc :) Some JS is running. Save me to your machine.</p>
+
+    <button onclick="">Get another random</button>
+    <div id="displayUser"></div>
+
+    <script>
+
+    function getRandomUser(callback) {
+      // This function uses AJAX to hit the random user API.
+      // More info: https://randomuser.me
+
+      var request = new XMLHttpRequest();
+      request.open('GET', 'https://randomuser.me/api/', true);
+      request.onload = () => { callback(request) };
+      request.send();
+    }
+    
+    function parseRandomUser(dataResponse) {
+      console.log(JSON.parse(dataResponse.response).results[0]);
+      return JSON.parse(dataResponse.response).results[0];
+    };
+
+    // getRandomUser(parseRandomUser); // Execute the function
+
+    // TODO: Async wait for content
+    function userToView(callback) {
+      let displayUser = document.getElementById("displayUser");
+      let createUserP = document.createElement("p");
+      createUserP.innerHTML = callback();
+      displayUser.appendChild(createUserP);
+    }
+    // userToView(getRandomUser(parseRandomUser));
+
+    </script>
+  </body>
+</html>

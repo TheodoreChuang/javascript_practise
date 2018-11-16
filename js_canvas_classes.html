@@ -8,11 +8,11 @@
 	<h1>Dogs of Sydney</h1>
 	<div>
 		<!-- Adds Dogs -->
-		<button onclick="">Add your Dog</button>
 		<label>Name:</label>
 		<input id="addDogNameInput" type="text">
 		<label>Location:</label>
 		<input id="addDogLocationInput" type="text">
+		<button id="addDogButton">Add your Dog</button>
 	</div>
 
 	<!-- <div> -->
@@ -123,8 +123,11 @@ doggo.walk("Bay", 8)
 let dogModel = {
 	dogsList: [],
 	addDog: function(name, location, walks) {
-		let dog = new Dog(name, location, walks);
-		this.dogsList.push(dog);
+		this.dogsList.push(new Dog(name, location, walks));
+	},
+	addWalk: function(location, distance) {
+		// console.log(this)  this = dogsList
+		this.walk(location, distance);
 	}
 }
 
@@ -134,25 +137,40 @@ let dogController = {
 		let addDogLocationInput = document.getElementById('addDogLocationInput');
 		dogModel.addDog(addDogNameInput.value, addDogLocationInput.value);
 		dogView.displayDogs();
+	},
+	addWalk: function(){
+		let location = prompt("Where was the walk?");
+		let distance = prompt("How far was the walk?");
+		dogModel.addWalk(location, distance);
 	}
 }
 
 let dogView = {
 	displayDogs: function() {
 		let dogsUl = document.querySelector('ul');
+		dogsUl.innerHTML = "";
 		
 		dogModel.dogsList.forEach(function(dog){
 			let dogLi = document.createElement('li');
-			dogLi.textContent = dog.name;
+			dogLi.textContent = `${dog.name} from ${dog.location}  `;
+			dogLi.appendChild(this.addWalkButton());
+			// TODO: check and display any walks
 			dogsUl.appendChild(dogLi);
-		});
+		}, this); // forEach(callback, this) required for button
+	},
+	addWalkButton: function() {
+		let walkButton = document.createElement('button');
+		walkButton.textContent = "Add Walk";
+		// walkButton.addEventListener("click", dogController.addWalk); 
+		return walkButton;
+	},
+	setUpEventListeners: function() {
+		let addDogButton = document.getElementById("addDogButton");
+		addDogButton.addEventListener("click", dogController.addDog);
 	}
 }
 
-let dogsUl = document.querySelector('ul');
-let dogLi = document.createElement('li');
-dogLi.innerHTML = "test dog";
-dogsUl.appendChild(dogLi);
+dogView.setUpEventListeners();
 </script>
 </body>
 </html>
