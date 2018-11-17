@@ -188,33 +188,85 @@ let calculation = addAndThenHalveAtSomePoint(10, 20, value => {
 });
 
 // Solution
-// FIXME
-function addNums(a, b, callback) {
-  return function() {
+function addNums(callback) {
+  return function(a, b) {
     setTimeout(() => {
       let answer = a + b;
-
       return callback(answer);
-    }, 3000);
+    }, 1000);
   };
 }
 
-function halveNum(num, callback) {
-  return function() {
+function halveNum(callback) {
+  return function(num) {
     setTimeout(() => {
-      return num / 2;
-    }, 2000);
-    return callback(answer);
+      let answer = num / 2;
+      return callback(answer);
+    }, 1000);
   };
 }
 
-function logSomething(callback) {
-  console.log(callback);
-  //   return callback(something);
+function logSomething(something) {
+  console.log(something);
+  return something;
 }
 
-function decomposeAddAndThenHalveAtSomePoint(a, b, callback) {
-  callback(halveNum(addNums(a, b)));
+function shallowAddAndThenHalveAtSomePoint(a, b, callback) {
+  addNums(halveNum(callback))(a, b);
 }
 
-decomposeAddAndThenHalveAtSomePoint(4, 8, logSomething);
+shallowAddAndThenHalveAtSomePoint(4, 8, logSomething);
+
+// // Garret's Version Shallow Code
+// function addAndThenHalveAtSomepoint(a, b, callback) {
+//   return addAtSomePoint(halveAtSomePoint(callback))(a, b);
+// }
+
+// function addAtSomePoint(callback) {
+//   return function(a, b) {
+//     setTimeout(function() {
+//       let answer = a + b;
+
+//       return callback(answer);
+//     }, 1000);
+//   };
+// }
+
+// function halveAtSomePoint(callback) {
+//   return function(a) {
+//     setTimeout(function() {
+//       let answer = a / 2;
+
+//       return callback(answer);
+//     }, 1000);
+//   };
+// }
+
+// addAndThenHalveAtSomepoint(10, 20, function(answer) {
+//   console.log(answer);
+// });
+
+// // David Armour's Answer
+// function addNum(a, b, callback) {
+//   return () => {
+//     let answer = a + b;
+//     setTimeout(halveNum(answer, callback), 2000);
+//   };
+// }
+
+// function halveNum(answer, callback) {
+//   return () => {
+//     answer = answer / 2;
+//     return callback(answer);
+//   };
+// }
+
+// function addAndThenHalveAtSomePoint(a, b, callback) {
+//   setTimeout(addNum(a, b, callback), 3000);
+// }
+
+// function logAnswer(value) {
+//   console.log(value);
+// }
+
+// let calculation = addAndThenHalveAtSomePoint(10, 20, logAnswer);

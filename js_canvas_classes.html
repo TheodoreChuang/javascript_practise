@@ -3,21 +3,37 @@
 <html lang="en">
 <head>
   <title>Canvas JS Classes-Dogs of Sydney</title>
+  <style>
+    body {
+      width: 70%;
+      margin: 0 auto;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+    ul {
+      padding-left: 0px;
+      list-style-type: none;
+      border-top: 1px solid black;
+    }
+    li {
+      border-bottom: 1px solid black;
+      padding: 10px;
+    }
+    p {
+      margin-left: 30px;
+    }
+  </style>
 </head>
 <body>
 	<h1>Dogs of Sydney</h1>
 	<div>
-		<!-- Adds Dogs -->
-		<label>Name:</label>
-		<input id="addDogNameInput" type="text">
-		<label>Location:</label>
-		<input id="addDogLocationInput" type="text">
+    <!-- Add Dogs -->
+		<label>Name: </label><input id="addDogNameInput" type="text">
+		<label>Location: </label><input id="addDogLocationInput" type="text">
 		<button id="addDogButton">Add your Dog</button>
 	</div>
 
-	<!-- <div> -->
-		<ul></ul>
-	<!-- </div> -->
+  <!-- List of Dog -->
+	<ul></ul>
 
 <script>
 //// Challenge
@@ -59,9 +75,6 @@ DogConstructorFunction.prototype.total_distance = function() {
 	return total_distance
 };
 
-let dogga = new DogConstructorFunction("dogga", "Aus", [{location: "SW", distance: 10}, {location: "TL", distance: 8}]);
-
-
 
 // Class Syntax - Doggo
 class Dog {
@@ -97,7 +110,6 @@ class Dog {
 	}
 }
 
-let doggo = new Dog("doggo", "Can", [{location: "SW", distance: 10}, {location: "TL", distance: 8}]);
 
 //// Beast Mode
 // Create a Walk class with properties: location and distance
@@ -114,20 +126,18 @@ class Walk {
 	return this.walk;
 	}
 }
-dogga.walk("Bay", 8)
-doggo.walk("Bay", 8)
 
 //// Beast Mode++
 // Create a basic GUI in the browser to interact with your classes. 'Add' button, prompts and lists to create and display dogs
 // Add walks to the GUI. I.e. add a `New Walk` button to each dog and display their walks under their name.  
+
 let dogModel = {
 	dogsList: [],
 	addDog: function(name, location, walks) {
 		this.dogsList.push(new Dog(name, location, walks));
 	},
-	addWalk: function(location, distance) {
-		// console.log(this)  this = dogsList
-		this.walk(location, distance);
+	addWalk: function(dogId, location, distance) {
+		this.dogsList[dogId].walk(location, distance);
 	}
 }
 
@@ -135,33 +145,52 @@ let dogController = {
 	addDog: function() {
 		let addDogNameInput = document.getElementById('addDogNameInput');
 		let addDogLocationInput = document.getElementById('addDogLocationInput');
-		dogModel.addDog(addDogNameInput.value, addDogLocationInput.value);
+    dogModel.addDog(addDogNameInput.value, addDogLocationInput.value);
+    addDogNameInput.value = "", addDogLocationInput.value = "";
 		dogView.displayDogs();
 	},
-	addWalk: function(){
+	addWalk: function(dogId){
 		let location = prompt("Where was the walk?");
-		let distance = prompt("How far was the walk?");
-		dogModel.addWalk(location, distance);
+    let distance = prompt("How far was the walk?");
+    dogModel.addWalk(dogId, location, distance);
+    dogView.displayDogs();
 	}
 }
 
 let dogView = {
 	displayDogs: function() {
-		let dogsUl = document.querySelector('ul');
-		dogsUl.innerHTML = "";
-		
-		dogModel.dogsList.forEach(function(dog){
-			let dogLi = document.createElement('li');
+    let dogsUl = document.querySelector('ul');
+    dogsUl.innerHTML = "";
+
+		dogModel.dogsList.forEach(function(dog, id){
+      let dogLi = document.createElement('li');
+      dogLi.id = id;
 			dogLi.textContent = `${dog.name} from ${dog.location}  `;
-			dogLi.appendChild(this.addWalkButton());
-			// TODO: check and display any walks
+      dogLi.appendChild(this.addWalkButton());
+      
 			dogsUl.appendChild(dogLi);
-		}, this); // forEach(callback, this) required for button
+    }, this); // forEach(callback, this) required for button
+    
+    dogModel.dogsList.forEach(function(dog, id) {
+      let dogId = document.getElementById(id);
+      console.log(dogId);
+
+      dog.walks.forEach(function(walk){
+        let walkP = document.createElement('p');
+        walkP.textContent = `${dog.name} walked ${walk.distance} km at ${walk.location}`
+        dogId.appendChild(walkP);
+      });
+    });
 	},
 	addWalkButton: function() {
 		let walkButton = document.createElement('button');
-		walkButton.textContent = "Add Walk";
-		// walkButton.addEventListener("click", dogController.addWalk); 
+    walkButton.textContent = "Add Walk";
+    
+		walkButton.addEventListener("click", function(event) {
+      let buttonClicked = event.target;
+      dogId = parseInt(buttonClicked.parentNode.id);
+      dogController.addWalk(dogId);
+    }); 
 		return walkButton;
 	},
 	setUpEventListeners: function() {
@@ -171,6 +200,13 @@ let dogView = {
 }
 
 dogView.setUpEventListeners();
+
+let dogge = new Dog("Fido", "Manly", [{location: "North Head", distance: 10}, {location: "Manly", distance: 4}]);
+dogModel.dogsList.push(dogge);
+let doggi = new Dog("Lassy", "Bondi", [{location: "coastal walk", distance: 12}, {location: "Bondi Junction", distance: 8}]);
+dogModel.dogsList.push(doggi);
+dogView.displayDogs();
+
 </script>
 </body>
 </html>
