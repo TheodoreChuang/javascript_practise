@@ -11,85 +11,140 @@
 
 <ul id="tweets"></ul>
 
-<script>  
+<script>
+  let tweetUl = document.getElementById("tweets");
+  let newTweet = document.getElementById('newTweet')
+  let newTweetButton = document.getElementById('newTweetButton')
 
-let tweetUl = document.getElementById("tweets");
+// --------- Views ---------   
+  let tweetView = {
+    // --------- Create Star? Button ---------   
+      starredButton: function() {
+      let starredButton = document.createElement("button");
+      starredButton.textContent = "star?";
 
-// TODO - XHR
-// function getUserData() {
-//     console.log("Starting XHR");
+      starredButton.addEventListener("click", event => {
+        let buttonClicked = event.target;
+        let tweetId = parseInt(buttonClicked.parentNode.id)
+        tweetHandler.starredTweet(tweetId);
+      })
+      return starredButton;
+    },
+    // --------- Create Delete Button ---------   
+      createDeleteButton: function() {
+      let deleteButton = document.createElement("button");
+      deleteButton.textContent = "delete";
 
-//     let request = new XMLHttpRequest();  // XHR
+      deleteButton.addEventListener("click", event => {
+        let buttonClicked = event.target;
+        let tweetId = parseInt(buttonClicked.parentNode.id)
+        tweetHandler.deleteTweet(tweetId);
+      });
+      return deleteButton;
+    },
+    // --------- Display All with Fetch ---------   
+    displayTweets: function(tweets) {
+      tweetUl.textContent = "";
+      newTweet.value = "";
+      descOrderTweets = tweets.reverse();
 
-//     request.open('GET', 'https://randomuser.me/api', true);
+      descOrderTweets.forEach((tweet) => {
+        let tweetLi = document.createElement("li")
+        tweetLi.id = tweet.id;
+        let starred = tweet.starred !== true ? "" : "*";
+        tweetLi.textContent = `${tweet.message} ${starred}`;
+        tweetLi.appendChild(this.starredButton());
+        tweetLi.appendChild(this.createDeleteButton());
+        tweetUl.appendChild(tweetLi);
+      });
+    },
+    // --------- Fetch All with Fetch ---------   
+    fetchAllTweets: function () {
+      fetch("http://localhost:3000/tweets.json")
+        .then(response => response.json())
+        .then(json => this.displayTweets(json))
+        .catch(error => console.log(error));
+    }
+  }
 
-//     request.onload = () => {
-//       if (request.status >= 200 && request.status < 400) {
-//         console.log(request.responseText);
-//       } else {
-//         console.log("Error");
-//         console.log(request);
-//       }
-//     }
+// --------- Handler ---------   
+  let tweetHandler = {
+    // --------- Post New Tweet ---------   
+    postNewTweet: function () {
+      let url = "http://localhost:3000/tweets.json";
+      let data = { tweet: { message: `${newTweet.value}` } };
 
-//     request.onerror = () => {
-//       console.log("Connection error");
-//     }
+      fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+        body: JSON.stringify(data),
+      })
+        .then((response) => { 
+          console.log(response)
+          tweetView.fetchAllTweets() 
+        })
+        .catch(error => console.log(error));
+    },
+    // --------- Star a tweet ---------   
+    // FIXME
+    starredTweet: function(tweetId) {
+      let url = `http://localhost:3000/tweets/${tweetId}.json`;
+      let data = { tweet: { starred: "true" } };
 
-//     request.send();
-//   }
+      fetch(url, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+        body: JSON.stringify(data),
+      })
+        .then((response) => { 
+          console.log("starred")
+          console.log(response)
+          tweetView.fetchAllTweets() 
+        })
+        .catch(error => console.log(error));
+    },
+    // --------- Delete a tweet ---------   
+    deleteTweet: function(tweetId) {
+      let url = `http://localhost:3000/tweets/${tweetId}`;
+      
+      fetch(url, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+      })
+        .then(() => { tweetView.fetchAllTweets() })
+        .catch(error => console.log(error));
+    }
+  }
 
-function displayTweets(tweets) {
-  tweets.forEach(function(tweet) {
-    let tweetLi = document.createElement("li")
-    tweetLi.textContent = tweet.message;
-    tweetUl.appendChild(tweetLi);
-  })
-}
+
+  tweetView.fetchAllTweets()
+  newTweetButton.addEventListener("click", tweetHandler.postNewTweet);
+
+
 
 // --------- Display All with jQuery ---------   
 
-function jqueryAllTweet(callback) {
-  $.ajax({
-    url: "http://localhost:3000/tweets.json",
-    type: "GET",
-    success: (data) => {
-      console.log(data);
-      callback(data)
-    },
-    error: (error) => {
-      console.log(error);
-    }
-  })
-}
-
+// function jqueryAllTweet(callback) {
+//   $.ajax({
+//     url: "http://localhost:3000/tweets.json",
+//     type: "GET",
+//     success: (data) => {
+//       console.log(data);
+//       callback(data)
+//     },
+//     error: (error) => {
+//       console.log(error);
+//     }
+//   })
+// }
 // jqueryAllTweet(displayTweets);
 
-// --------- Display All with Fetch ---------   
-
-function fetchAllTweets() {
-  fetch("http://localhost:3000/tweets.json")
-    .then(response => response.json())
-    .then(json => displayTweets(json))
-    .catch(error => console.log(error));
-}
-
-fetchAllTweets()
-
-
-// --------- Post New Tweet ---------   
-
-let newTweet = document.getElementById('newTweet')
-let newTweetButton = document.getElementById('newTweetButton')
-
-newTweetButton.addEventListener("click", postNewTweet);
-
-// FIXME - 400
+// Not tested, CORS issue
 // function postNewTweet() {
 //   $.ajax({
 //     url: "http://localhost:3000/tweets.json",
 //     type: "POST",
-//     data: { tweets: { message: newTweet }},
+//     data: { tweets: { message: `${newTweet.value}` }},
 //     success: (tweet) => {
 //       console.log(`Success: ${tweet}`);
 //     },
@@ -98,24 +153,6 @@ newTweetButton.addEventListener("click", postNewTweet);
 //     }
 //   })
 // }
-
-// Works only if directly in Rails App, Rails security issues
-function postNewTweet() {
-    let url = "http://localhost:3000/tweets.json";
-    let data = { tweet: { message: `${newTweet.value}` } };
-
-    fetch(url, {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json; charset=utf-8"
-    },
-    body: JSON.stringify(data),
-    })
-    // .then(response => console.log(response))
-    .then(response => response.json())
-    .then(json => console.log(json.value))
-    .catch(error => console.log(error));
-}
 
 </script>    
 </body>
