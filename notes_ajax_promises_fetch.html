@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Ajax, CORS, Promises, Fetch API</title>
+  <script src="jquery.min.js" type="text/javascript"></script>
+</head>
+<body>
+  <button id="get">Get User Data</button>
+  <button id="post">Post User Data</button>
+  <button id="getJokes">Get Jokes</button>
+
+<script>
+  document.getElementById('get').addEventListener("click", getUserData);
+  document.getElementById('post').addEventListener("click", postUserData);
+  document.getElementById('getJokes').addEventListener("click", getJokes);
+
+  // ---------------------------------------------------------------
+  // AJAX / XHR
+  // ---------------------------------------------------------------
+  // Version 1. Vanilla XMLHttpRequest / XHR 
+
+  // XHR Get
+  function getUserData() {
+    console.log("Starting XHR");
+
+    let request = new XMLHttpRequest();  // XHR
+
+    request.open('GET', 'https://randomuser.me/api', true);
+
+    request.onload = () => {
+      if (request.status >= 200 && request.status < 400) {
+        console.log(request.responseText);
+      } else {
+        console.log("Error");
+        console.log(request);
+      }
+    }
+
+    request.onerror = () => {
+      console.log("Connection error");
+    }
+
+    request.send();
+  }
+
+  // XHR Post
+  // Not working, need to set up OPTIONS on Rails
+  // function postUserData() {
+  //   console.log("Starting XHR");
+
+  //   let request = new XMLHttpRequest();
+  //   let url = 'http://localhost:3000/students';
+  //   let params = {student: {
+  //           name: 'Bob',
+  //           location: 'Sydney'
+  //         }};
+
+  //   request.open('POST', url, true);
+  
+  //   request.setRequestHeader("Content-Type", "application/json");
+
+  //   request.onload = () => {
+  //     if (request.status >= 200 && request.status < 400) {
+  //       console.log(request.responseText);
+  //     } else {
+  //       console.log("Error");
+  //       console.log(request);
+  //     }
+  //   }
+
+  //   request.onerror = () => {
+  //     console.log("Connection error");
+  //   }
+
+  //   request.send(params);
+  // }
+
+
+  // ---------------------------------------------------------------
+  //  Version 2 - jQuery
+
+    // function getUserData() {
+    //   console.log("Start XHR");
+
+    //   $.ajax({
+    //     // Rails App student_api
+    //     url: 'http://localhost:3000/students.json',
+    //     type: 'GET',
+    //     success: (data) => {
+    //       console.log(data);
+    //     },
+    //     error: (error) => {
+    //       console.log("Error");
+    //       console.log(error);
+    //     }
+    //   })
+    // }
+
+    function postUserData() {
+      console.log("Start XHR");
+
+      $.ajax({
+        // Rails App student_api
+        url: 'http://localhost:3000/students.json',
+        type: 'POST',
+        data: {
+          student: {
+            name: 'John',
+            location: 'Brisbane'
+          }
+        },
+        success: (data) => {
+          console.log(data);
+        },
+        error: (error) => {
+          console.log("Error");
+          console.log(error);
+        }
+      })
+    }
+  
+
+  // ---------------------------------------------------------------
+  // Promises = new Promise((resolve, reject) => { });
+  // ---------------------------------------------------------------
+
+  // --------- Promise Example Adder ---------
+  function adder(x, y) {
+      return new Promise((resolve, reject) => {
+        let answer = x + y;
+
+        if( isNaN(answer)) {
+          reject("Input needs to be a number");
+        }
+
+        resolve(answer);
+      })
+    }
+
+    adder(2, 5)
+      .then(data => {
+        console.log(data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    console.log("First, promises are async");
+
+    // Adder 3 times, taking previous answer as first input for next call
+    // adder(2, 5)
+    //   .then(ans1 => {
+    //     return adder(ans1, 1)
+    //       .then(ans2 => {
+    //         return adder(ans2, 4)
+    //         .then(ans3 => {
+    //           console.log(ans1);
+    //           console.log(ans2);
+    //           console.log(ans3);
+    //         })
+    //       })
+    //   })
+    //   .catch(error => {
+    //     console.log("Error bubble up")
+    //     console.log(error);
+    //   });
+
+    adder(2, 5)
+      .then(ans1 => {
+        return adder(ans1, 3)
+      })
+      .then(ans2 => {
+        // throw "catches this error, try not required with promise's catch"
+        return adder(ans2, 4)
+      })
+      .then(ans3 => {
+        // console.log("ans2 not defined, promise scope")
+        console.log(ans3)
+      })
+      .catch(error => {
+        console.log("Errors bubble up")
+        console.log(error);
+      });
+
+
+// --------- Promise Example Jokes ---------
+
+  document.getElementById("getJokes").addEventListener("click", getJokes);
+
+  // function getJokes() {
+  //   let url = "https://api.chucknorris.io/jokes/random";
+
+  //   $.get(url, (joke1) => {
+  //     $.get(url, (joke2) => {
+  //       $.get(url, (joke3) => {
+  //         let jokeArray = [
+  //           joke1.value,
+  //           joke2.value,
+  //           joke3.value
+  //         ];
+
+  //         console.log(jokeArray);
+  //       });
+  //     });
+  //   });
+  // }
+
+  function getJoke() {
+    return new Promise((resolve, reject) => {
+      let url = "https://api.chucknorris.io/jokes/random";
+      
+      $.get(url, joke => {
+        if (joke && joke.value) {
+          resolve(joke.value);
+        }
+        reject(new Error("Could not retrieve joke"));
+      })
+    })
+  };
+
+  // --------- Promise chaining ---------
+
+  // function getJokes() {
+  //   let jokes = [];
+
+  //   getJoke()
+  //     .then(joke => {
+  //       jokes.push(joke);
+  //       return getJoke();
+  //     })
+  //     .then(joke => {
+  //       jokes.push(joke);
+  //       return getJoke();
+  //     })
+  //     .then(joke => {
+  //       jokes.push(joke);
+  //     })
+  //     .catch(error => console.log(error) );
+  // }
+
+  // --------- Promise.all Exampe 1 array ---------
+
+  function getJokes() {
+    let jokePromises = [
+      getJoke(),
+      getJoke(),
+      getJoke()
+    ];
+
+    Promise.all(jokePromises)
+    .then(jokes => {
+      console.log(jokes);
+    })
+    .catch(error => console.log(error));
+  }
+
+
+  // Promise All Example 2 
+
+  function multiplier(x, y, secs) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        let answer = x * y;
+
+        if (isNaN(answer)) {
+          reject(new Error("input needs to be numbers"));
+        }
+
+        resolve(answer);
+      }, secs * 1000);
+    })
+  }
+
+  let promises = [
+    multiplier(1, 2, 2),
+    multiplier(5, 10, 4),
+    multiplier(6, 7, 1),
+    // multiplier(6, "error", 1)
+  ];
+  
+  Promise.all(promises)
+    .then(answers => console.log(answers))
+    .catch(error => console.log(error));
+
+  // --------- Promise Race ---------
+    // only returns fastest response
+
+  Promise.race(promises)
+    .then(answer => console.log(answer))
+    .catch(error => console.log(error));
+
+
+
+  // ---------------------------------------------------------------
+  // Fetch API - fetch(url, {options}) - returns a promise
+  // ---------------------------------------------------------------
+
+  function fetchGetJoke() {
+    fetch("https://api.chucknorris.io/jokes/random")
+      .then(response => response.json())
+      .then(json => console.log(json))
+      .catch(error => console.log(error));
+  }
+
+  // Not working here, needs to set up OPTIONS on Rails server ?
+  function fetchPostStudent() {
+    let url = "http://localhost:3000/students.json";
+    let data = { student: { name: "Sarah", location: "Sydney" } };
+
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8"
+      },
+      body: JSON.stringify(data),
+    })
+      .then(response => response.json())
+      .then(json => console.log(json.value))
+      .catch(error => console.log(error));
+  }
+
+
+</script>
+</body>
+</html>
