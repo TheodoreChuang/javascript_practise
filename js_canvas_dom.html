@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Canvas Challenges - DOM</title>
+    <style>
+      #todoCounter {
+        padding: 10px;
+        height: 10px;
+      }
+
+      #todoButton {
+        display: none;
+      }
+
+      .completed {
+        color: gray;
+      }  
+    </style>
+  </head>
+</head>
+<body>
+
+  <p id="todoCounter"></p>
+
+  <form> 
+    <input id="todoInput">
+    <button id="todoButton"></button>
+  </form>
+
+
+  <ul id="todoList"></ul>
+
+  <script>
+    let todoCounter = document.querySelector('#todoCounter');
+    let todoList = document.querySelector('#todoList');
+    let todoInput = document.querySelector('#todoInput');
+    let todoButton = document.querySelector('#todoButton');
+
+    todoButton.addEventListener('click', addTodo);
+
+    // --- Views ---
+
+    function refreshAll(){
+      refreshLis();
+      refreshCounter();
+    }
+
+    function refreshLis() {
+      lisArray = Array.from(todoList.childNodes)
+      lisArray.forEach( (li, id) => li.id = `todo${id}`)
+    }
+
+    function refreshCounter() {
+      let todos = todoList.querySelectorAll('li');
+      todoCounter.textContent = `TODO: ${todos.length}`;
+    }
+
+    function progressBar() {
+      // TODO
+    }
+
+
+   // --- Handlers ---
+
+    function addTodo() {
+      event.preventDefault();
+      let newTodo = todoInput.value;
+      let newLi = document.createElement('li');
+      newLi.textContent = newTodo;
+      todoList.appendChild(newLi);
+
+      todoInput.value = "";
+      refreshAll()
+      newLi.addEventListener('click', todoComplete);
+      newLi.appendChild(addDeleteButton());
+    }
+  
+    function todoComplete(event) {
+      event.target.classList.toggle('completed');
+    }
+
+    function addDeleteButton() {
+      let deleteButton = document.createElement('button');
+      deleteButton.textContent = 'delete?';
+
+      deleteButton.addEventListener('click', () => {
+        let liId = event.target.parentNode.id;        
+        let liToDelete = document.getElementById(liId);
+        liToDelete.parentNode.removeChild(liToDelete);
+        refreshAll()
+      });
+      return deleteButton;
+    }
+
+
+    // TODO 
+    // 1. progress bar
+    // 2. Update the input functionality. It should also search the tasks as a user types. Demo
+    // 3. Refreshing the page wipes all our data! Find a way to persist data.
+
+  </script>  
+</body>
+</html>

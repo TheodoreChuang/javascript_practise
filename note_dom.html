@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <title>DOM Today</title>
+  <style>
+    .blue {
+      color: blue;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome</h1>
+
+  <p>This page is used for practicing the DOM</p>
+
+  <div>
+    <p>We will be learning</p>
+
+    <ul>
+      <li class="odd">Adding to the DOM</li>
+      <li>Querying the DOM</li>
+      <li class="odd">Changing the DOM</li>
+      <li>Event Listeners</li>
+    </ul>
+  </div>
+
+  <form id="page-form">
+    <input type="text" />
+    <input type="submit" value="Click me" />
+  </form>
+
+  <script>
+
+// ------ DOM ------
+
+    let newDiv = document.createElement('div');
+    newDiv.textContent = "New DIV";
+    document.body.appendChild(newDiv);
+
+    // document.write("<div>rewrites entire page</div>");
+
+  // --- Querying ---
+
+    // querySelector built with any CSS selectors
+      // static, not updated with new elements, less performant
+
+    let firstP = document.querySelector('p');
+    let secondP = document.querySelector('p:nth-child(1)');
+    let oddClasses = document.querySelectorAll('.odd');
+    let pageFormId = document.querySelector('#page-form');
+    
+    let allPsNodeList = document.querySelectorAll('p');     
+    let allPsArray = Array.from(allPsNodeList); 
+
+    // querying nested elements
+    let div = document.querySelector('div')
+    let p = div.querySelectorAll('p');
+
+
+    // older methods, returns HTML Collection instead of NodeList
+      // live and updates, more performant, by reference and built when called
+
+    let pageFormById = document.getElementById('page-form');
+    let odds = document.getElementsByClassName("odd");
+    let allPsHTMLCollection = document.getElementsByTagName("p")            
+
+
+  // --- Creating ---
+
+    let newLi = document.createElement('li');
+    newLi.textContent = "new li at bottom"
+    document.querySelector('ul').appendChild(newLi);
+
+    let newLi2 = document.createElement('li');
+    newLi2.textContent = "new li at top"
+    document.querySelector('ul').prepend(newLi2);
+
+    // static, not updated with new elements, less performant
+    console.log(document.querySelectorAll('li'))
+    // live and updates, more performant, by reference and built when called
+    console.log(document.getElementsByTagName('li'))
+
+
+  // --- Removing through Parent ---
+
+    let li3 = document.querySelector('li:nth-child(3)');
+    // let ul = document.querySelector('ul');
+    // ul.removeChild(li3);
+    li3.parentNode.removeChild(li3)
+
+    // document.querySelector('ul').innerHTML = null;
+
+
+  // --- Updating ---
+
+    // Classes
+    let title = document.querySelector('h1');
+    title.classList.add('blue');
+    title.classList.remove('blue');
+    title.classList.toggle('blue');
+
+    // Attributes
+    let formButton = document.querySelector('input[type=submit]');
+    formButton.value = "Don't click me";
+
+    Object.assign(formButton, {
+      value: "Oops, you can click",
+      id: "my-form-button"
+    })
+
+    // In-line Styles
+    title.style.marginLeft = `20px`;    // appends
+    title.style = `color: red`;         // overwrites
+
+    window.getComputedStyle(title).getPropertyValue('color');
+
+    // Content
+    div.innerHTML += '<p>here</p>'      // repaints DOM
+    firstP.textContent = "First P";
+
+
+// ------ Event Listenings, on DOM nodes ------
+  
+    // in Chrome console
+    // monitorEvents(document.body); // logs all events on the body
+    // monitorEvents(document.body, 'mouse'); // logs mouse events on the body
+    // monitorEvents(document.querySelectorAll('li')); // logs all events on inputs
+
+    formButton.addEventListener("click", function(event) { 
+      event.preventDefault();     // otherwise form submit redirects
+      console.log(event) 
+      console.log(event.target) 
+      this.value += '!';
+      })
+
+    // let allLis = document.querySelectorAll('li');
+    // allLis.forEach( i => {
+    //   i.addEventListener("mouseenter", 
+    //   event => { console.log(event)
+    //   })
+    // })
+
+
+    // --- Event Bubbling ---
+      // target determined from traversing parent to target  
+      // listeners trigger from most nested and upwards through parents
+      
+
+    div.addEventListener('click', () => alert("clicked div"));
+    innerP = div.querySelector('p')
+    innerP.addEventListener('click', () => alert("clicked inner p"));
+
+
+    // --- Stopping Bubbling ---
+    
+    innerP.addEventListener('click', function(event) {
+      // event.stopPropagation();
+      alert("clicked inner p");
+    })
+
+    // div.addEventListener('click', function(event) {
+    //   alert("clicked div only one time");
+    // }, {once: true});
+
+  
+    // disrupt usual bubbling flow
+    // capture triggers event listener while target traverses from parent to target
+    // does not repeat while bubbling back up
+    div.addEventListener('click', function(event) {
+      alert("clicked div only one time");
+    }, {capture: true});
+
+
+    // --- Removing Listeners, need target element and callback name ---
+    
+    div.addEventListener('click', function divClick() {
+      console.log('div clicked');
+      div.removeEventListener('click', divClick)
+    })
+
+    function titleClick(event) {
+      console.log('title clicked');
+    }
+
+    document.querySelector('h1').addEventListener('click', titleClick);
+
+    document.querySelector('p').addEventListener('click',
+      function() {
+        document.querySelector('h1').removeEventListener('click', titleClick);
+        console.log("removed titleClick listener")
+    })
+
+  </script>
+</body>
+</html>
