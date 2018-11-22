@@ -1,6 +1,6 @@
 "use strict";
 // -------------------------------------------------
-// Morning Nov 19
+//  Nov 19
 // -------------------------------------------------
 // Write a JavaScript function named objectMatches to compare two objects to determine if the first object
 // contains equivalent property values to the second one.
@@ -33,7 +33,7 @@ function objectMatches(object1, object2) {
 }
 
 // -------------------------------------------------
-// Morning Nov 20
+//  Nov 20
 // -------------------------------------------------
 
 let obj = {
@@ -103,7 +103,7 @@ console.log(c);
 // [3, 4, 5, 6, 7]
 
 // -------------------------------------------------
-// Morning Nov 21
+//  Nov 21
 // -------------------------------------------------
 
 //Program three different ways to log each individual item in the array.
@@ -192,3 +192,7 @@ class Fruit {
 }
 
 let apple = new Fruit("apple", "green", 3);
+
+// -------------------------------------------------
+//  Nov
+// -------------------------------------------------
