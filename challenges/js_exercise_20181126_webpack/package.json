@@ -1,0 +1,19 @@
+{
+  "name": "js_exercise_20181126_webpack",
+  "version": "1.0.0",
+  "description": "Morning Challenge Webpack 2018-11-26",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "TC",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^4.26.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10"
+  },
+  "dependencies": {
+    "web3": "^1.0.0-beta.36"
+  }
+}
