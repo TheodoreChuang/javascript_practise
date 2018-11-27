@@ -98,11 +98,10 @@ function addContact(callback) {
     .catch(error => console.log(error));
 }
 
-// TODO
 function removeContact(callback) {
   let contactsArray = [];
   for (let name in contacts) {
-    // console.log(`${name}: ${contacts[name].phone}`);
+    console.log(name);
     contactsArray.push(name);
   }
   console.log(contactsArray);
@@ -111,14 +110,14 @@ function removeContact(callback) {
     .prompt([
       {
         type: "list",
-        contact: "contact",
+        name: "contact",
         message: "Who would you like to remove?",
-        choices: ["Bob", "Alice"]
+        choices: contactsArray
       }
     ])
     .then(contact => {
-      console.log(contact);
-      // remove contacts[`${contact}`]
+      let name = contact.contact;
+      delete contacts[`${name}`];
       callback();
     })
     .catch(error => console.log(error));
@@ -133,3 +132,7 @@ function saveToFile() {
 }
 
 menuPrompt();
+
+// TODO
+// 1. View details of a specific user
+// 2. Bonus Incorporate some more features/packages into your app. Ideas: geocoding, password protection, encryption.
