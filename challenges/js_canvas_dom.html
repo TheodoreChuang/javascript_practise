@@ -14,11 +14,16 @@
 
       .completed {
         color: gray;
+      }
+      progress {
+        width: 100%;
       }  
     </style>
   </head>
 </head>
 <body>
+
+  <progress value="0" max="1"></progress>
 
   <p id="todoCounter"></p>
 
@@ -27,10 +32,11 @@
     <button id="todoButton"></button>
   </form>
 
-
   <ul id="todoList"></ul>
 
+
   <script>
+    let progressBar = document.querySelector('progress');
     let todoCounter = document.querySelector('#todoCounter');
     let todoList = document.querySelector('#todoList');
     let todoInput = document.querySelector('#todoInput');
@@ -43,6 +49,7 @@
     function refreshAll(){
       refreshLis();
       refreshCounter();
+      refreshProgressBar();
     }
 
     function refreshLis() {
@@ -55,8 +62,15 @@
       todoCounter.textContent = `TODO: ${todos.length}`;
     }
 
-    function progressBar() {
-      // TODO
+    function refreshProgressBar() {
+      let lisArray = Array.from(todoList.childNodes);
+      let total = lisArray.length;
+      let completed = 0
+      lisArray.forEach( todo => {
+        if (todo.classList.value === "completed") completed += 1;
+      });
+      let progressRatio = parseFloat(completed / total);
+      progressBar.value = progressRatio || 0;
     }
 
 
@@ -77,6 +91,7 @@
   
     function todoComplete(event) {
       event.target.classList.toggle('completed');
+      refreshAll()
     }
 
     function addDeleteButton() {
@@ -94,8 +109,7 @@
 
 
     // TODO 
-    // 1. progress bar
-    // 2. Update the input functionality. It should also search the tasks as a user types. Demo
+    // 2. Update the input functionality. It should also search the tasks as a user types.
     // 3. Refreshing the page wipes all our data! Find a way to persist data.
 
   </script>  

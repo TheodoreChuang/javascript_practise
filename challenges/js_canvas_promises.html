@@ -35,7 +35,7 @@
     const anotherOneBtn = document.querySelector('#another-one');
 
     // When they click the 'Another one!' button, run getRandomUser
-    anotherOneBtn.addEventListener("click", getRandomUser);
+    anotherOneBtn.addEventListener("click", getRandomUserAsync);
 
     function createUser (jsonResults) {
       const user = jsonResults.results[0];
@@ -59,7 +59,7 @@
       randoms.innerHTML = html + randoms.innerHTML;
     }
  
-    function getRandomUser () {
+    function getRandomUser() {
 
       // If the button is in a `disabled` state, we're waiting for a request to finish.
       // Return so we don't send another request.
@@ -84,10 +84,31 @@
     }
 
 
-    // TODO:
     // Beast Mode++
     // Research the 'await' expression. Adapt your Random User app to take advantage of it.
     
+    async function getRandomUserAsync() {
+      try {
+      // If the button is in a `disabled` state, we're waiting for a request to finish.
+      // Return so we don't send another request.
+      if (anotherOneBtn.hasAttribute('disabled')) return;
+
+      // Update the button to give the user some feedback
+      anotherOneBtn.innerText = 'Loading...';
+      anotherOneBtn.setAttribute('disabled', '');
+
+      const response = await fetch('https://randomuser.me/api/')
+      const json = await response.json()
+
+      createUser(json)
+
+      anotherOneBtn.innerText = 'Another one!';
+      anotherOneBtn.removeAttribute('disabled');
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
     </script>
   </body>
 </html>
