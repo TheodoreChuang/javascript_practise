@@ -1,0 +1,32 @@
+<h1>{{ product.name }}</h1>
+<h3>Categories:</h3>
+ {{#each product.categories}}
+  <p>{{ this }}</p>
+  {{/each}}
+<h3>Price:</h3>
+    <p>{{ product.price }}</p>
+
+    <a href='/products/{{ product._id }}?_method=DELETE'>Delete</a>
+
+<form method="POST" action="/products/{{ product._id }}/reviews">
+      <div>
+        <label>Author:</label>
+        <input type="text" name="author" />
+    </div>
+      <div>
+        <label>How was it?:</label>
+        <textarea name="content"></textarea>
+    </div>
+    <div>
+      <input type="submit" value="create review" />
+    </div>
+</form>
+
+<h4>Reviews</h4>
+{{#each product.reviews}}
+  <div class="wrap">
+    <p>Author: {{ this.author }}</p>
+    <p>{{ this.content }}</p>
+    <a href="/products/{{ ../product._id }}/reviews/{{ this._id }}?_method=DELETE">Delete</a>
+  </div>
+{{/each}}

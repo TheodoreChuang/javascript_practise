@@ -1,0 +1,19 @@
+<form method="POST" action="/products/{{ product._id }}?_method=PUT">
+    <div>
+        <label>Name:</label>
+        <input type="text" name="name" value="{{ product.name }}"/>
+    </div>
+    <div>
+        <label>Categories:</label>
+        <label><input type="checkbox" name="categories" value="pants" />Pants</label>
+        <label><input type="checkbox" name="categories" value="tops" />Tops</label>
+        <label><input type="checkbox" name="categories" value="accessories" />Accessories</label>
+    </div>
+    <div>
+        <label>Price:</label>
+        <input type="number" name="price" value="{{ product.price }}" />
+    </div>
+    <div>
+        <input type="submit" value="edit product" />
+    </div>
+</form>
