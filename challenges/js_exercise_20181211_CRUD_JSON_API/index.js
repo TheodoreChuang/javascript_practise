@@ -17,6 +17,6 @@ app.listen(port, () => console.log(`Server is listening on port ${port}`));
 //x Full CRUD
 //x Only JSON API, no views
 //x MongoDB
-// Validation using celebrate and mongoose
+//x Validation using celebrate and mongoose
 //x Morgan logger
-// generic error handling
+//x generic error handling

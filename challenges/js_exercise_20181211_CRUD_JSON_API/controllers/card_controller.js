@@ -1,39 +1,61 @@
 const CardModel = require("./../database/models/card_model");
 
-async function index(req, res) {
+async function index(req, res, next) {
   const cards = await CardModel.find();
-  res.json(cards);
+
+  if (!cards) {
+    next(new HTTPError(404, "Not found"));
+  } else {
+    res.json(cards);
+  }
 }
 
-async function show(req, res) {
+async function show(req, res, next) {
   const { id } = req.params;
   const card = await CardModel.findById(id);
-  res.json(card);
+
+  if (!card) {
+    next(new HTTPError(404, "Not found"));
+  } else {
+    res.json(card);
+  }
 }
 
-async function create(req, res) {
+async function create(req, res, next) {
   const { name, color, type } = req.body;
-  const card = await CardModel.create({ name, color, type }).catch(err =>
-    res.status(500).send(err)
-  );
-  res.status(200);
-  res.json(req.body);
+  const card = await CardModel.create({ name, color, type });
+
+  if (!card) {
+    next(new HTTPError(500, "Card was not created"));
+  } else {
+    res.status(200);
+    res.json(req.body);
+  }
 }
 
-async function update(req, res) {
+async function update(req, res, next) {
   const { name, color, type } = req.body;
   const { id } = req.params;
-
   const card = await CardModel.findByIdAndUpdate(id, { name, color, type });
-  res.status(200);
-  res.json(req.body);
+
+  if (!card) {
+    next(new HTTPError(500, "Card was not updated"));
+  } else {
+    res.status(200);
+    res.json(req.body);
+  }
 }
 
-async function destroy(req, res) {
+async function destroy(req, res, next) {
   const { id } = req.params;
   const card = await CardModel.findByIdAndRemove(id);
-  res.status(200);
-  res.json(req.body);
+
+  if (!card) {
+    next(new HTTPError(500, "Card was not deleted"));
+  } else {
+    res.status(200);
+    res.json(req.body);
+  }
 }
 
 module.exports = {
