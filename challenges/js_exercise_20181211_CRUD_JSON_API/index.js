@@ -3,10 +3,20 @@ const app = require("./app");
 const port = 3000;
 
 mongoose.connect(
-  "mongodb://localhost/books_r_us_test",
+  "mongodb://localhost/mtg_api",
   { useNewUrlParser: true }
 );
 mongoose.Promise = global.Promise;
+
 mongoose.connection.on("error", err => console.log(err));
 
 app.listen(port, () => console.log(`Server is listening on port ${port}`));
+
+// TODO
+//x write integration tests first
+//x Full CRUD
+//x Only JSON API, no views
+//x MongoDB
+// Validation using celebrate and mongoose
+//x Morgan logger
+// generic error handling
