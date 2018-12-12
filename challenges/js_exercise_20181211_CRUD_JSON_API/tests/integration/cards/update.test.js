@@ -12,10 +12,10 @@ beforeAll(() => {
   mongoose.connection.on("error", err => console.log(err));
 });
 
-afterAll(async () => {
-  await CardModel.deleteMany({});
-  mongoose.connection.close();
-});
+// afterAll(async () => {
+//   await CardModel.deleteMany({});
+//   mongoose.connection.close();
+// });
 
 describe("API updates the details of a specific cards", () => {
   test("updates BFW", async () => {

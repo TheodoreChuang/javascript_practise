@@ -12,10 +12,10 @@ beforeAll(() => {
   mongoose.connection.on("error", err => console.log(err));
 });
 
-afterAll(async () => {
-  await CardModel.deleteMany({});
-  mongoose.connection.close();
-});
+// afterAll(async () => {
+//   await CardModel.deleteMany({});
+//   mongoose.connection.close();
+// });
 
 describe("Delete existing card", () => {
   test("delete a card", async () => {

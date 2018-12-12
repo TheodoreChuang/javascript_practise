@@ -20,3 +20,4 @@ app.listen(port, () => console.log(`Server is listening on port ${port}`));
 //x Validation using celebrate and mongoose
 //x Morgan logger
 //x generic error handling
+//x global setup/tear of test, concurrent test files seem to be an issue
