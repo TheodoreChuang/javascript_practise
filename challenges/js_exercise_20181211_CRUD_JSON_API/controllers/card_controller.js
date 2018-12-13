@@ -36,7 +36,11 @@ async function create(req, res, next) {
 async function update(req, res, next) {
   const { name, color, type } = req.body;
   const { id } = req.params;
-  const card = await CardModel.findByIdAndUpdate(id, { name, color, type });
+  const card = await CardModel.findByIdAndUpdate(
+    id,
+    { name, color, type },
+    { new: true }
+  );
 
   if (!card) {
     next(new HTTPError(500, "Card was not updated"));

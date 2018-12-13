@@ -1,48 +1,59 @@
 const UserModel = require("./../database/models/user_model");
+const jwt = require("jsonwebtoken");
 
 function loginForm(req, res) {
   res.render("authentication/login_form");
 }
 
-async function loginVerify(req, res) {
-  const { email, password } = req.body;
-  const user = await UserModel.findOne({ email });
+// async function loginVerify(req, res) {
+//   const { email, password } = req.body;
+//   const user = await UserModel.findOne({ email });
 
-  if (!user) {
-    return res.redirect("/login");
-  }
+//   if (!user) {
+//     return res.redirect("/login");
+//   }
 
-  const valid = await user.verifyPassword(password);
+//   const valid = await user.verifyPassword(password);
 
-  if (!valid) {
-    return res.redirect("/login");
-  }
+//   if (!valid) {
+//     return res.redirect("/login");
+//   }
 
-  req.session.user = user;
-  res.redirect("/dashboard");
-}
+//   req.session.user = user;
+//   res.redirect("/dashboard");
+// }
 
+// Show Registration Page to create new user
 function make(req, res) {
   res.render("authentication/make");
 }
 
-async function create(req, res) {
+// Create new user
+async function create(req, res, next) {
   // const { email, password } = req.body // not required due to celebrate validation
   const user = await UserModel.create(req.body);
-  req.session.user = user;
+  const token = jwt.sign({ sub: user._id }, process.env.JWT_SECRET);
+  res.cookie("jwt", token); // not recommended JWT in cookie
   res.redirect("/dashboard");
 }
 
 function logout(req, res) {
-  req.session.destroy(() => {
-    res.redirect("/");
-  });
+  // req.session.destroy(() => { });
+  req.logout();
+  res.cookie("jwt", null, { maxAge: -1 });
+  res.redirect("/");
+}
+
+function generateJWT(req, res) {
+  const token = jwt.sign({ sub: req.user._id }, process.env.JWT_SECRET);
+  res.cookie("jwt", token); // not recommended JWT in cookie
+  res.redirect("/dashboard");
 }
 
 module.exports = {
   loginForm,
-  loginVerify,
   make,
   create,
-  logout
+  logout,
+  generateJWT
 };
