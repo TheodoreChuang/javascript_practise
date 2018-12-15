@@ -1,5 +1,5 @@
 {
-  "name": "express-boilerplate",
+  "name": "lesson-auth-session-jwt-oauth",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",

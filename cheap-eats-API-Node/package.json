@@ -1,10 +1,12 @@
 {
-  "name": "js_exercise_20181211_crud_json_api-TESTS",
+  "name": "cheap-eats-api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "jest --coverage",
+    "seed": "node database/seeds",
+    "dev-server": "nodemon index.js",
     "server": "forever -c \"nodemon --exitcrash -L\" index.js"
   },
   "jest": {
@@ -14,16 +16,18 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "celebrate": "^9.0.1",
-    "express": "^4.16.4",
-    "mongoose": "^5.3.15",
-    "morgan": "^1.9.1"
-  },
   "devDependencies": {
     "forever": "^0.15.3",
     "jest": "^23.6.0",
-    "nodemon": "^1.18.8",
+    "nodemon": "^1.18.7",
     "supertest": "^3.3.0"
+  },
+  "dependencies": {
+    "celebrate": "^9.0.1",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "mongoose": "^5.3.15",
+    "mongoose-bcrypt": "^1.6.0",
+    "morgan": "^1.9.1"
   }
 }

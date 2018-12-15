@@ -50,8 +50,13 @@ passport.use(
     {
       // jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       jwtFromRequest: req => {
-        if (req && req.cookies) {
-          return req.cookies["jwt"];
+        // JWT cookie just for demo, not secure
+        // if (req && req.cookies) {
+        //   return req.cookies["jwt"];
+        // }
+
+        if (req.session && req.session.jwt) {
+          return req.session.jwt;
         }
 
         return null;

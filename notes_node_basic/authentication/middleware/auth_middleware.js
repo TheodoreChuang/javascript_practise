@@ -8,8 +8,8 @@
 // }
 
 function authRedirect(req, res, next) {
-  // if (req.session && req.session.user) {
-  if (req.user) {
+  if (req.session && req.session.jwt) {
+    console.log(req.session);
     return res.redirect("/dashboard");
   }
 
