@@ -6,6 +6,8 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
+require("./config/passport");
+
 app.use(morgan("combined"));
 
 app.use(require("./routes"));

@@ -3,7 +3,8 @@ const { Schema } = require("mongoose");
 const UserSchema = new Schema({
   email: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   password: {
     type: String,
@@ -23,6 +24,11 @@ const UserSchema = new Schema({
       eatName: {
         type: String,
         ref: "Eat",
+        required: true
+      },
+      locationId: {
+        type: Schema.Types.ObjectId,
+        ref: "Location",
         required: true
       },
       locationName: {

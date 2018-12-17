@@ -1,7 +1,12 @@
 const { Schema } = require("mongoose");
+// const LocationModel = require('./../models/location_model')
 
 const EatSchema = new Schema({
   eatName: {
+    type: String,
+    required: true
+  },
+  cuisine: {
     type: String,
     required: true
   },
@@ -32,7 +37,7 @@ const EatSchema = new Schema({
 
 module.exports = EatSchema;
 
-// - name (pizza slice, cheese burger, wrap, banhmi, sushi rolls, salad)
+// - name (pizza, burger, sandwich, pie, wrap, banhmi, sushi rolls)
 // - cuisine
 // - price
 // - rate (0-10)

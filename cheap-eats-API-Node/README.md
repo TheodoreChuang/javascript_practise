@@ -20,11 +20,12 @@ EATS
 GET /eats //list of all eats
 POST /eats //start keeping track of a new eat
     - name (pizza, burger, wrap, ban hmi, sushi rolls, salad)
-    - price
+    - cuisine
     - locations
         - location
         - times ate for each user
         - timestamps //array of timestamps
+        - price
 PUT/PATCH /eats/:id/increment //increase the amount of an existing eat and adds a timestamp
     - location
 PUT/PATCH /eats/:id/decrement //decrease the amount of an existing eat and removes last timestamp

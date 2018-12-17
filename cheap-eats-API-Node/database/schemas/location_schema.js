@@ -1,4 +1,5 @@
 const { Schema } = require("mongoose");
+const EatModel = require("./../models/eat_model");
 
 const LocationSchema = new Schema({
   locationName: {
