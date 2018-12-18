@@ -4,7 +4,7 @@ import Nav from "./Nav";
 
 const Header = () => {
   return (
-    <header>
+    <header style={{ marginTop: "80px" }}>
       <h1>Welcome To Sandra's Profile Page</h1>
       <Nav />
     </header>
