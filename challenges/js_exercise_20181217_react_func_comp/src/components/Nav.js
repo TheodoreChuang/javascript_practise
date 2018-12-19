@@ -19,7 +19,8 @@ import Button from "@material-ui/core/Button";
 
 const styles = {
   ul: {
-    listStyleType: "none"
+    listStyleType: "none",
+    marginLeft: "15%"
   },
   li: {
     display: "inline",
