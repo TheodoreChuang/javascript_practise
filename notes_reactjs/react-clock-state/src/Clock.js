@@ -3,51 +3,42 @@ import "./Clock.css";
 
 class Clock extends Component {
   state = {
-    errorMessage: null,
-    latitude: null,
-    month: null,
+    // errorMessage: null,
     clockIcon: null,
-    timezone: null,
     seconds: null,
     minutes: null,
     hours: null
   };
 
   componentDidMount() {
-    console.log("mounted");
+    console.log("Mounted: ", this.props);
 
-    const timezone = this.props.timezone;
-    let time = new Date();
-
-    this.setState({
-      timezone: timezone,
-      month: time.getMonth()
-    });
-
-    window.navigator.geolocation.getCurrentPosition(
-      position => {
-        this.setState({ latitude: position.coords.latitude });
-        this.getClockIcon();
-      },
-      error => {
-        console.log(error);
-        this.setState({ errorMessage: error.message });
-      }
-    );
+    this.getClockIcon();
 
     setInterval(this.timer.bind(this), 1000);
+
+    // window.navigator.geolocation.getCurrentPosition(
+    //   position => {
+    //     this.setState({ latitude: position.coords.latitude });
+    //     this.getClockIcon();
+    //   },
+    //   error => {
+    //     console.log(error);
+    //     this.setState({ errorMessage: error.message });
+    //   }
+    // );
   }
 
   timer() {
-    const options = {
-      timeZone: `${this.state.timezone}`,
+    const dateOptions = {
+      timeZone: `${this.props.timezone}`,
       hour12: false,
       hours: "numeric",
       minutes: "numeric",
       seconds: "numeric"
     };
-    let time = new Date().toLocaleString("en-US", options);
-    let timeUnits = time.slice(12).split(":");
+    let time = new Date().toLocaleString("en-US", dateOptions);
+    let timeUnits = time.slice(time.indexOf(" ") + 1).split(":");
 
     let getSeconds = timeUnits[2];
     let getMinutes = timeUnits[1];
@@ -61,7 +52,8 @@ class Clock extends Component {
   }
 
   isItSummer() {
-    const { latitude, month } = this.state;
+    const { latitude } = this.props;
+    const month = new Date().getMonth();
 
     if (latitude) {
       if (
@@ -78,7 +70,8 @@ class Clock extends Component {
   }
 
   getClockIcon() {
-    const { latitude } = this.state;
+    const { latitude } = this.props;
+
     if (latitude) {
       if (this.isItSummer()) {
         return this.setState({ clockIcon: "sun.svg" });
@@ -94,42 +87,42 @@ class Clock extends Component {
   // }
 
   render() {
-    const { errorMessage, hours, minutes, seconds, clockIcon } = this.state;
+    const { hours, minutes, seconds, clockIcon } = this.state;
 
     return (
       <div className="container">
-        {errorMessage || (
-          <div className="container">
-            <h3 className="label">{this.props.timezone}</h3>
-            <div
-              className="clock-face"
-              style={{ backgroundImage: `url(/${clockIcon})` }}
-            >
-              <div className="clock">
-                <div className="hours-container">
-                  <div
-                    className="hours"
-                    style={{
-                      transform: `rotateZ(${hours * 30 + minutes / 2}deg)`
-                    }}
-                  />
-                </div>
-                <div className="minutes-container">
-                  <div
-                    className="minutes"
-                    style={{ transform: `rotateZ(${minutes * 6}deg)` }}
-                  />
-                </div>
-                <div className="seconds-container">
-                  <div
-                    className="seconds"
-                    style={{ transform: `rotateZ(${seconds * 6}deg)` }}
-                  />
-                </div>
+        {/* {errorMessage || ( */}
+        <div className="container">
+          <h3 className="label">{this.props.timezone}</h3>
+          <div
+            className="clock-face"
+            style={{ backgroundImage: `url(/${clockIcon})` }}
+          >
+            <div className="clock">
+              <div className="hours-container">
+                <div
+                  className="hours"
+                  style={{
+                    transform: `rotateZ(${hours * 30 + minutes / 2}deg)`
+                  }}
+                />
+              </div>
+              <div className="minutes-container">
+                <div
+                  className="minutes"
+                  style={{ transform: `rotateZ(${minutes * 6}deg)` }}
+                />
+              </div>
+              <div className="seconds-container">
+                <div
+                  className="seconds"
+                  style={{ transform: `rotateZ(${seconds * 6}deg)` }}
+                />
               </div>
             </div>
           </div>
-        )}
+        </div>
+        {/* )} */}
       </div>
     );
   }
