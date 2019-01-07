@@ -12,6 +12,7 @@ class BookmarkForm extends Component {
     try {
       const response = await LocalApi.post("/bookmarks", { title, url });
       this.props.onBookmarkFormSubmit(response.data);
+      this.setState({ title: "", url: "" });
     } catch (error) {
       console.log(error);
     }

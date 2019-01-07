@@ -1,9 +1,11 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 # Challenges
-* Implement a logout button.
-* Create a way for a user to login.
+*x Implement a logout button.
+*x Create a way for a user to login. (passport-local-mongoose)
+  * Handle incorrect login
 * Display all of the users bookmarks in <BookmarksPage> (url should be clickable)
+(* Move Auth into Navbar)
 
 # Beast Mode
 * Allow a user to delete a bookmark

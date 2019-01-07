@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./../styles/App.css";
 import RegisterPage from "./pages/RegisterPage";
+import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import BookmarksPage from "./pages/BookmarksPage";
 import NotFoundPage from "./pages/NotFoundPage";
@@ -36,6 +37,12 @@ class App extends Component {
     this.setState({ token }, cb);
   };
 
+  onLoginFormSubmit = (token, cb) => {
+    sessionStorage.setItem("token", token);
+    LocalApi.setAuthHeader(token);
+    this.setState({ token }, cb);
+  };
+
   render() {
     const { token } = this.state;
 
@@ -44,20 +51,16 @@ class App extends Component {
         <div>
           {token && <h4>User is logged in!</h4>}
           <Switch>
-            {/* <Route exact path="/" token={token} component={HomePage} /> */}
             <Route
               exact
               path="/"
               render={props => {
                 return (
-                  <HomePage
-                    {...props}
-                    logout={this.logout}
-                    token={this.token}
-                  />
+                  <HomePage {...props} logout={this.logout} token={token} />
                 );
               }}
             />
+
             <Route
               exact
               path="/register"
@@ -70,12 +73,27 @@ class App extends Component {
                 );
               }}
             />
+
+            <Route
+              exact
+              path="/login"
+              render={props => {
+                return (
+                  <LoginPage
+                    {...props}
+                    onLoginFormSubmit={this.onLoginFormSubmit}
+                  />
+                );
+              }}
+            />
+
             <PrivateRoute
               exact
               path="/bookmarks"
               token={token}
               component={BookmarksPage}
             />
+
             <Route component={NotFoundPage} />
           </Switch>
         </div>

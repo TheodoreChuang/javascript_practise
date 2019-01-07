@@ -11,6 +11,9 @@ class HomePage extends Component {
 
         {token ? (
           <div>
+            <Link to="/bookmarks">
+              <button>Bookmarks</button>
+            </Link>
             <button onClick={this.props.logout}>Logout</button>
           </div>
         ) : (
