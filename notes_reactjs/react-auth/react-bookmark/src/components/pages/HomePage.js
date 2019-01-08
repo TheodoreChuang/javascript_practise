@@ -9,7 +9,7 @@ class HomePage extends Component {
       <div>
         <h1>Welcome To Bookmarker!</h1>
 
-        {token ? (
+        {token !== null ? (
           <div>
             <Link to="/bookmarks">
               <button>Bookmarks</button>

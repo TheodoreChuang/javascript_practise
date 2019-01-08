@@ -6,7 +6,9 @@ class LoginPage extends Component {
     return (
       <div>
         <h1>Welcome back</h1>
-        <LoginForm onLoginFormSubmit={this.props.onLoginFormSubmit} />
+        <LoginForm
+        // onLoginFormSubmit={this.props.onLoginFormSubmit}
+        />
       </div>
     );
   }

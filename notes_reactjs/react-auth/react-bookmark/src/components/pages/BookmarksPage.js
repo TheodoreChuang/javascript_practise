@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import BookmarkForm from "./../forms/BookmarkForm";
 
 class BookmarksPage extends Component {

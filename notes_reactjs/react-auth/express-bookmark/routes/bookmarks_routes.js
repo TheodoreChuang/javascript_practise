@@ -3,6 +3,8 @@ const router = express.Router();
 const { celebrate, Joi } = require("celebrate");
 const BookmarkController = require("./../controllers/bookmark_controller");
 
+router.get("/", BookmarkController.index);
+
 router.post(
   "/",
   celebrate({

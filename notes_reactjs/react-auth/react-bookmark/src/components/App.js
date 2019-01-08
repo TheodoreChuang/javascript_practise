@@ -6,50 +6,53 @@ import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import BookmarksPage from "./pages/BookmarksPage";
 import NotFoundPage from "./pages/NotFoundPage";
-import LocalApi from "./../apis/local";
+// import LocalApi from "./../apis/local";
 import PrivateRoute from "./PrivateRoute";
+import { connect } from "react-redux";
+import { setAuthToken } from "./../actions";
 
 class App extends Component {
-  //   state = { token: sessionStorage.getItem("token") };
-  constructor(props) {
-    super(props);
-    const token = sessionStorage.getItem("token");
-    this.state = { token };
+  // //   state = { token: sessionStorage.getItem("token") };
+  // constructor(props) {
+  //   super(props);
+  //   const token = sessionStorage.getItem("token");
+  //   this.state = { token };
 
-    if (token) {
-      LocalApi.setAuthHeader(token);
-    }
+  //   if (token) {
+  //     LocalApi.setAuthHeader(token);
+  //   }
 
-    // Callback so axios interceptor has reference to specific App instance
-    LocalApi.handleTokenError(() => {
-      this.logout();
-    });
-  }
+  //   // Callback so axios interceptor has reference to specific App instance
+  //   LocalApi.handleTokenError(() => {
+  //     this.logout();
+  //   });
+  // }
 
   logout = () => {
+    // this.setState({ token: null });
+    this.props.setAuthToken(null);
     sessionStorage.clear();
-    this.setState({ token: null });
   };
 
-  onRegisterFormSubmit = (token, cb) => {
-    sessionStorage.setItem("token", token);
-    LocalApi.setAuthHeader(token);
-    this.setState({ token }, cb);
-  };
+  // onRegisterFormSubmit = (token, cb) => {
+  //   // sessionStorage.setItem("token", token);  moved to redux Action Creator
+  //   LocalApi.setAuthHeader(token);
+  //   this.setState({ token }, cb);
+  // };
 
-  onLoginFormSubmit = (token, cb) => {
-    sessionStorage.setItem("token", token);
-    LocalApi.setAuthHeader(token);
-    this.setState({ token }, cb);
-  };
+  // onLoginFormSubmit = (token, cb) => {
+  //   sessionStorage.setItem("token", token);
+  //   LocalApi.setAuthHeader(token);
+  //   this.setState({ token }, cb);
+  // };
 
   render() {
-    const { token } = this.state;
+    const { token } = this.props;
 
     return (
       <BrowserRouter>
         <div>
-          {token && <h4>User is logged in!</h4>}
+          {token !== null && <h4>User is logged in!</h4>}
           <Switch>
             <Route
               exact
@@ -68,7 +71,7 @@ class App extends Component {
                 return (
                   <RegisterPage
                     {...props}
-                    onRegisterFormSubmit={this.onRegisterFormSubmit}
+                    // onRegisterFormSubmit={this.onRegisterFormSubmit}
                   />
                 );
               }}
@@ -81,7 +84,7 @@ class App extends Component {
                 return (
                   <LoginPage
                     {...props}
-                    onLoginFormSubmit={this.onLoginFormSubmit}
+                    // onLoginFormSubmit={this.onLoginFormSubmit}
                   />
                 );
               }}
@@ -90,7 +93,7 @@ class App extends Component {
             <PrivateRoute
               exact
               path="/bookmarks"
-              token={token}
+              // token={token}
               component={BookmarksPage}
             />
 
@@ -102,4 +105,13 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    token: state.auth.token
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { setAuthToken }
+)(App);
