@@ -1,12 +1,35 @@
 import React, { Component } from "react";
 import BookmarkForm from "./../forms/BookmarkForm";
+import LocalApi from "./../../apis/local";
 
 class BookmarksPage extends Component {
   state = { bookmarks: [] };
 
+  componentDidMount() {
+    this.getBookmarks();
+  }
+
+  getBookmarks = async () => {
+    try {
+      const response = await LocalApi.get("/bookmarks");
+      this.setState({ bookmarks: response.data });
+    } catch (error) {
+      console.warn(error);
+    }
+  };
+
   onBookmarkFormSubmit = bookmarks => {
     this.setState({ bookmarks });
-    console.log(bookmarks);
+  };
+
+  onDeleteButtonClick = async bookmarkId => {
+    console.log(bookmarkId);
+    try {
+      const response = await LocalApi.delete(`/bookmarks/${bookmarkId}`);
+      this.setState({ bookmarks: response.data });
+    } catch (error) {
+      console.warn(error);
+    }
   };
 
   render() {
@@ -23,7 +46,16 @@ class BookmarksPage extends Component {
           {bookmarks.map(bookmark => {
             return (
               <li key={bookmark._id}>
-                <a href={bookmark.url}>{bookmark.title}</a>
+                <a
+                  href={bookmark.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {bookmark.title}
+                </a>
+                <button onClick={() => this.onDeleteButtonClick(bookmark._id)}>
+                  Delete
+                </button>
               </li>
             );
           })}

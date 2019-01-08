@@ -16,4 +16,6 @@ router.post(
   BookmarkController.create
 );
 
+router.delete("/:id", BookmarkController.destroy);
+
 module.exports = router;

@@ -17,14 +17,10 @@ class RegisterForm extends Component {
     axios
       .post("http://localhost:3000/auth/register", { email, password })
       .then(response => {
-        // before implementing Redux
-        // this.props.onRegisterFormSubmit(response.data.token, () => {
-        //   this.props.history.push("/");
-        // });
         this.props.setAuthToken(response.data.token);
         this.props.history.push("/bookmarks");
       })
-      .catch(err => console.log(err));
+      .catch(err => console.warn(err));
   };
 
   onInputChange = (name, event) => {

@@ -14,7 +14,7 @@ class BookmarkForm extends Component {
       this.props.onBookmarkFormSubmit(response.data);
       this.setState({ title: "", url: "" });
     } catch (error) {
-      console.log(error);
+      console.warn(error);
     }
   };
 

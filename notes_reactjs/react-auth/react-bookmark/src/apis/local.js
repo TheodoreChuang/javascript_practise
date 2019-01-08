@@ -1,12 +1,25 @@
 import axios from "axios";
-// import JWT from "jsonwebtoken";
 import store from "./../store";
 
 const LocalApi = axios.create({
   baseURL: "http://localhost:3000"
 });
 
+// Redux Implementation
+LocalApi.interceptors.request.use(function(config) {
+  const state = store.getState();
+  const token = state.auth.token;
+
+  // TODO: first check expiry
+
+  if (token) {
+    config.headers["Authorization"] = `Bearer ${token}`;
+  }
+  return config;
+});
+
 // Before Redux Implementation
+// import JWT from "jsonwebtoken";
 // LocalApi.setAuthHeader = function(token) {
 //   this.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 // };
@@ -30,18 +43,5 @@ const LocalApi = axios.create({
 //     return config;
 //   });
 // };
-
-// Redux Implementation
-LocalApi.interceptors.request.use(function(config) {
-  const state = store.getState();
-  const token = state.auth.token;
-
-  // TODO: first check expiry
-
-  if (token) {
-    config.headers["Authorization"] = `Bearer ${token}`;
-  }
-  return config;
-});
 
 export default LocalApi;

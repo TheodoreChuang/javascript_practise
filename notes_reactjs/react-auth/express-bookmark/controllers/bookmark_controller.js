@@ -1,19 +1,15 @@
-const UserModel = require("./../database/models/user_model");
-
-async function index(req, res, next) {
-  console.log("bookmark index");
-  // UserModel
+function index(req, res, next) {
   try {
-    console.log(req.user.bookmarks);
-    // await req.user.save();
-    // res.json(req.user.bookmarks);
+    res.json(req.user.bookmarks);
   } catch (err) {
     next(err);
   }
 }
 
 async function create(req, res, next) {
-  req.user.bookmarks.push(req.body);
+  const bookmark = sanitizeURL(req.body);
+  req.user.bookmarks.push(bookmark);
+
   try {
     await req.user.save();
     res.json(req.user.bookmarks);
@@ -22,7 +18,43 @@ async function create(req, res, next) {
   }
 }
 
+// async function update(req, res, next) {
+//   const { id } = req.params;
+//   const bookmark = req.user.bookmarks.id(id);
+//   const { title, url } = req.body;
+
+//   try {
+//     // bookmark.update();
+//     // await req.user.save();
+//     res.json(req.user.bookmarks);
+//   } catch (err) {
+//     next(err);
+//   }
+// }
+
+async function destroy(req, res, next) {
+  const { id } = req.params;
+  const bookmark = req.user.bookmarks.id(id);
+
+  try {
+    bookmark.remove();
+    await req.user.save();
+    res.json(req.user.bookmarks);
+  } catch (err) {
+    next(err);
+  }
+}
+
+function sanitizeURL(bookmark) {
+  bookmark.url =
+    bookmark.url.slice(0, 8) === "https://"
+      ? bookmark.url
+      : "https://" + bookmark.url;
+  return bookmark;
+}
+
 module.exports = {
   index,
-  create
+  create,
+  destroy
 };

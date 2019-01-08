@@ -17,15 +17,12 @@ class LoginForm extends Component {
     axios
       .post("http://localhost:3000/auth/login", { email, password })
       .then(response => {
-        // this.props.onLoginFormSubmit(response.data.token, () => {
-        //   this.props.history.push("/");
-        // });
-        console.log(response);
+        console.log("logged in:", response);
         this.props.setAuthToken(response.data.token);
         this.props.history.push("/bookmarks");
       })
       .catch(err => {
-        console.log(err);
+        console.warn(err);
         this.setState({ email: "Incorrect Login Details" });
       });
   };
