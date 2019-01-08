@@ -11,7 +11,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 # Beast Mode
 *x Allow a user to delete a bookmark
-* Allow a user to edit a bookmark
+*x Allow a user to edit a bookmark
 * Handle JWT expiry (redux)
 
 # Beast Mode+

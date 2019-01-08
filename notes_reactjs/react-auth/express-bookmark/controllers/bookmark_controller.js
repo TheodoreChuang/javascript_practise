@@ -7,10 +7,12 @@ function index(req, res, next) {
 }
 
 async function create(req, res, next) {
-  const bookmark = sanitizeURL(req.body);
-  req.user.bookmarks.push(bookmark);
+  let { title, url } = req.body;
+  url = sanitizeURL(url);
+  const bookmark = { title, url };
 
   try {
+    req.user.bookmarks.push(bookmark);
     await req.user.save();
     res.json(req.user.bookmarks);
   } catch (err) {
@@ -18,19 +20,20 @@ async function create(req, res, next) {
   }
 }
 
-// async function update(req, res, next) {
-//   const { id } = req.params;
-//   const bookmark = req.user.bookmarks.id(id);
-//   const { title, url } = req.body;
+async function update(req, res, next) {
+  const { id } = req.params;
+  const { title, url } = req.body;
+  const bookmark = req.user.bookmarks.id(id);
 
-//   try {
-//     // bookmark.update();
-//     // await req.user.save();
-//     res.json(req.user.bookmarks);
-//   } catch (err) {
-//     next(err);
-//   }
-// }
+  try {
+    bookmark.title = title;
+    bookmark.url = sanitizeURL(url);
+    await req.user.save();
+    res.json(req.user.bookmarks);
+  } catch (err) {
+    next(err);
+  }
+}
 
 async function destroy(req, res, next) {
   const { id } = req.params;
@@ -45,16 +48,13 @@ async function destroy(req, res, next) {
   }
 }
 
-function sanitizeURL(bookmark) {
-  bookmark.url =
-    bookmark.url.slice(0, 8) === "https://"
-      ? bookmark.url
-      : "https://" + bookmark.url;
-  return bookmark;
+function sanitizeURL(url) {
+  return url.slice(0, 8) === "https://" ? url : "https://" + url;
 }
 
 module.exports = {
   index,
   create,
+  update,
   destroy
 };

@@ -16,6 +16,27 @@ router.post(
   BookmarkController.create
 );
 
+router.put(
+  "/:id",
+  celebrate({
+    body: {
+      title: Joi.string().required(),
+      url: Joi.string().required()
+    }
+  }),
+  BookmarkController.update
+);
+router.patch(
+  "/:id",
+  celebrate({
+    body: {
+      title: Joi.string().required(),
+      url: Joi.string().required()
+    }
+  }),
+  BookmarkController.update
+);
+
 router.delete("/:id", BookmarkController.destroy);
 
 module.exports = router;
