@@ -1,6 +1,6 @@
 function index(req, res, next) {
   try {
-    res.json(req.user.bookmarks);
+    return res.json(req.user.bookmarks);
   } catch (err) {
     next(err);
   }
@@ -14,7 +14,7 @@ async function create(req, res, next) {
   try {
     req.user.bookmarks.push(bookmark);
     await req.user.save();
-    res.json(req.user.bookmarks);
+    return res.json(req.user.bookmarks);
   } catch (err) {
     next(err);
   }
@@ -29,7 +29,7 @@ async function update(req, res, next) {
     bookmark.title = title;
     bookmark.url = sanitizeURL(url);
     await req.user.save();
-    res.json(req.user.bookmarks);
+    return res.json(req.user.bookmarks);
   } catch (err) {
     next(err);
   }
@@ -42,7 +42,7 @@ async function destroy(req, res, next) {
   try {
     bookmark.remove();
     await req.user.save();
-    res.json(req.user.bookmarks);
+    return res.json(req.user.bookmarks);
   } catch (err) {
     next(err);
   }

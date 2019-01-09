@@ -6,8 +6,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
   * Handle incorrect login better
 *x Display all of the users bookmarks in <BookmarksPage> (url should be clickable)
 (* Move Auth into Navbar)
-* Refactor with Redux
-  *x User
+*x Refactor with Redux
 
 # Beast Mode
 *x Allow a user to delete a bookmark

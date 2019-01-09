@@ -14,8 +14,9 @@ class BookmarkUpdateForm extends Component {
     const { _id, title, url } = this.state;
 
     try {
+      // TODO move to Redux
       const response = await LocalApi.put(`/bookmarks/${_id}`, { title, url });
-      this.props.onBookmarkFormSubmit(response.data);
+      // this.props.onBookmarkFormSubmit(response.data);
       const newUrl = this.props.bookmark.url;
       this.setState({ newUrl });
     } catch (error) {
