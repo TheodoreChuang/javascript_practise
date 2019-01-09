@@ -12,6 +12,8 @@ class EntryForm extends Component {
     const { entry } = this.state;
     const { onEntryFormSubmit, category } = this.props;
     onEntryFormSubmit({ category, entry });
+
+    this.setState({ entry: "" });
   };
 
   render() {

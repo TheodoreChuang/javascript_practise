@@ -13,20 +13,21 @@ beforeAll(() => {
   mongoose.connection.on("error", err => console.log(err));
 });
 
+// const user1 = {
+//   email: "user1@mail.com",
+//   password: "password",
+//   userName: "user1"
+// };
+
 describe("Show the details of an user", () => {
   test("respond with 200", async () => {
-    const user = await UserModel.findOne();
-
-    supertest(app)
+    const response = supertest(app)
       .get(`/api/user/`)
       .expect("Content-Type", /json/)
       .expect(200);
-  });
 
-  test("returns details of an user", async () => {
-    const user = await UserModel.findOne();
-
-    const response = await supertest(app).get(`/api/user/`);
+    console.log(response);
     expect(response).toBeTruthy();
+    // "UserController.show"
   });
 });

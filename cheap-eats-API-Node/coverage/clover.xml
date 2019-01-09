@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1545113408430" clover="3.2.0">
+  <project timestamp="1545113408430" name="All files">
+    <metrics statements="94" coveredstatements="65" conditionals="10" coveredconditionals="0" methods="16" coveredmethods="0" elements="120" coveredelements="65" complexity="0" loc="94" ncloc="94" packages="7" files="13" classes="13">
+      <package name="cheap-eats-API-Node">
+        <metrics statements="10" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <file name="app.js" path="/Users/tchuang/Google_Drive/CA_Bootcamp/javascript_practice/cheap-eats-API-Node/app.js">
+          <metrics statements="10" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+          <line num="1" count="2" type="stmt"/>
+          <line num="2" count="2" type="stmt"/>
+          <line num="4" count="2" type="stmt"/>
+          <line num="6" count="2" type="stmt"/>
+          <line num="7" count="2" type="stmt"/>
+          <line num="9" count="2" type="stmt"/>
+          <line num="11" count="2" type="stmt"/>
+          <line num="13" count="2" type="stmt"/>
+          <line num="15" count="2" type="stmt"/>
+          <line num="17" count="2" type="stmt"/>
+        </file>
+      </package>
+      <package name="cheap-eats-API-Node.config">
+        <metrics statements="19" coveredstatements="6" conditionals="6" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <file name="passport.js" path="/Users/tchuang/Google_Drive/CA_Bootcamp/javascript_practice/cheap-eats-API-Node/config/passport.js">
+          <metrics statements="19" coveredstatements="6" conditionals="6" coveredconditionals="0" methods="2" coveredmethods="0"/>
+          <line num="1" count="2" type="stmt"/>
+          <line num="2" count="2" type="stmt"/>
+          <line num="3" count="2" type="stmt"/>
+          <line num="5" count="2" type="stmt"/>
+          <line num="7" count="2" type="stmt"/>
+          <line num="13" count="0" type="stmt"/>
+          <line num="14" count="0" type="stmt"/>
+          <line num="16" count="0" type="cond" truecount="0" falsecount="4"/>
+          <line num="17" count="0" type="stmt"/>
+          <line num="20" count="0" type="stmt"/>
+          <line num="22" count="0" type="stmt"/>
+          <line num="28" count="2" type="stmt"/>
+          <line num="36" count="0" type="stmt"/>
+          <line num="37" count="0" type="stmt"/>
+          <line num="38" count="0" type="stmt"/>
+          <line num="40" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="41" count="0" type="stmt"/>
+          <line num="44" count="0" type="stmt"/>
+          <line num="46" count="0" type="stmt"/>
+        </file>
+      </package>
+      <package name="cheap-eats-API-Node.controllers">
+        <metrics statements="14" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="11" coveredmethods="0"/>
+        <file name="eat_controller.js" path="/Users/tchuang/Google_Drive/CA_Bootcamp/javascript_practice/cheap-eats-API-Node/controllers/eat_controller.js">
+          <metrics statements="6" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="0"/>
+          <line num="4" count="0" type="stmt"/>
+          <line num="8" count="0" type="stmt"/>
+          <line num="12" count="0" type="stmt"/>
+          <line num="16" count="0" type="stmt"/>
+          <line num="20" count="0" type="stmt"/>
+          <line num="23" count="2" type="stmt"/>
+        </file>
+        <file name="location_controller.js" path="/Users/tchuang/Google_Drive/CA_Bootcamp/javascript_practice/cheap-eats-API-Node/controllers/location_controller.js">
+          <metrics statements="4" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="0"/>
+          <line num="4" count="0" type="stmt"/>
+          <line num="8" count="0" type="stmt"/>
+          <line num="12" count="0" type="stmt"/>
+          <line num="15" count="2" type="stmt"/>
+        </file>
+        <file name="user_controller.js" path="/Users/tchuang/Google_Drive/CA_Bootcamp/javascript_practice/cheap-eats-API-Node/controllers/user_controller.js">
+          <metrics statements="4" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="0"/>
+          <line num="4" count="0" type="stmt"/>
+          <line num="8" count="0" type="stmt"/>
+          <line num="16" count="0" type="stmt"/>
+          <line num="19" count="2" type="stmt"/>
+        </file>
+      </package>
+      <package name="cheap-eats-API-Node.database.models">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <file name="user_model.js" path="/Users/tchuang/Google_Drive/CA_Bootcamp/javascript_practice/cheap-eats-API-Node/database/models/user_model.js">
+          <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+          <line num="1" count="2" type="stmt"/>
+          <line num="2" count="2" type="stmt"/>
+          <line num="4" count="2" type="stmt"/>
+          <line num="6" count="2" type="stmt"/>
+        </file>
+      </package>
+      <package name="cheap-eats-API-Node.database.schemas">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <file name="user_schema.js" path="/Users/tchuang/Google_Drive/CA_Bootcamp/javascript_practice/cheap-eats-API-Node/database/schemas/user_schema.js">
+          <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+          <line num="1" count="2" type="stmt"/>
+          <line num="3" count="2" type="stmt"/>
+          <line num="44" count="2" type="stmt"/>
+          <line num="46" count="2" type="stmt"/>
+        </file>
+      </package>
+      <package name="cheap-eats-API-Node.middleware">
+        <metrics statements="8" coveredstatements="3" conditionals="4" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <file name="auth_middlware.js" path="/Users/tchuang/Google_Drive/CA_Bootcamp/javascript_practice/cheap-eats-API-Node/middleware/auth_middlware.js">
+          <metrics statements="4" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+          <line num="1" count="2" type="stmt"/>
+          <line num="4" count="0" type="stmt"/>
+          <line num="6" count="0" type="stmt"/>
+          <line num="9" count="2" type="stmt"/>
+        </file>
+        <file name="error_handler_middleware.js" path="/Users/tchuang/Google_Drive/CA_Bootcamp/javascript_practice/cheap-eats-API-Node/middleware/error_handler_middleware.js">
+          <metrics statements="4" coveredstatements="1" conditionals="4" coveredconditionals="0" methods="1" coveredmethods="0"/>
+          <line num="1" count="2" type="stmt"/>
+          <line num="2" count="0" type="cond" truecount="0" falsecount="4"/>
+          <line num="3" count="0" type="stmt"/>
+          <line num="6" count="0" type="stmt"/>
+        </file>
+      </package>
+      <package name="cheap-eats-API-Node.routes">
+        <metrics statements="35" coveredstatements="35" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <file name="eat_routes.js" path="/Users/tchuang/Google_Drive/CA_Bootcamp/javascript_practice/cheap-eats-API-Node/routes/eat_routes.js">
+          <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+          <line num="1" count="2" type="stmt"/>
+          <line num="2" count="2" type="stmt"/>
+          <line num="5" count="2" type="stmt"/>
+          <line num="7" count="2" type="stmt"/>
+          <line num="23" count="2" type="stmt"/>
+          <line num="27" count="2" type="stmt"/>
+          <line num="30" count="2" type="stmt"/>
+          <line num="35" count="2" type="stmt"/>
+        </file>
+        <file name="index.js" path="/Users/tchuang/Google_Drive/CA_Bootcamp/javascript_practice/cheap-eats-API-Node/routes/index.js">
+          <metrics statements="10" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+          <line num="1" count="2" type="stmt"/>
+          <line num="2" count="2" type="stmt"/>
+          <line num="3" count="2" type="stmt"/>
+          <line num="5" count="2" type="stmt"/>
+          <line num="6" count="2" type="stmt"/>
+          <line num="7" count="2" type="stmt"/>
+          <line num="9" count="2" type="stmt"/>
+          <line num="11" count="2" type="stmt"/>
+          <line num="13" count="2" type="stmt"/>
+          <line num="20" count="2" type="stmt"/>
+        </file>
+        <file name="location_routes.js" path="/Users/tchuang/Google_Drive/CA_Bootcamp/javascript_practice/cheap-eats-API-Node/routes/location_routes.js">
+          <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+          <line num="1" count="2" type="stmt"/>
+          <line num="2" count="2" type="stmt"/>
+          <line num="3" count="2" type="stmt"/>
+          <line num="5" count="2" type="stmt"/>
+          <line num="7" count="2" type="stmt"/>
+          <line num="14" count="2" type="stmt"/>
+          <line num="20" count="2" type="stmt"/>
+        </file>
+        <file name="user_routes.js" path="/Users/tchuang/Google_Drive/CA_Bootcamp/javascript_practice/cheap-eats-API-Node/routes/user_routes.js">
+          <metrics statements="10" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+          <line num="1" count="2" type="stmt"/>
+          <line num="2" count="2" type="stmt"/>
+          <line num="3" count="2" type="stmt"/>
+          <line num="6" count="2" type="stmt"/>
+          <line num="7" count="2" type="stmt"/>
+          <line num="9" count="2" type="stmt"/>
+          <line num="11" count="2" type="stmt"/>
+          <line num="26" count="2" type="stmt"/>
+          <line num="31" count="2" type="stmt"/>
+          <line num="37" count="2" type="stmt"/>
+        </file>
+      </package>
+    </metrics>
+  </project>
+</coverage>

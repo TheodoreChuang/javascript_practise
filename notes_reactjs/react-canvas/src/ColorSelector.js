@@ -7,9 +7,9 @@ class ColorSelector extends Component {
     onColorSelectorChange(event.target.value);
   };
 
-  componentDidUpdate() {
-    console.log("Selector updated");
-  }
+  // componentDidUpdate() {
+  //   console.log("Color Selector updated");
+  // }
 
   render() {
     const { hex } = this.props;
@@ -30,8 +30,8 @@ class ColorSelector extends Component {
   // };
 }
 
-ColorSelector.defaultProps = {
-  hex: "#0000FF"
-};
+// ColorSelector.defaultProps = {
+//   hex: "#0000FF"
+// };
 
 export default ColorSelector;

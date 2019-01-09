@@ -1,41 +1,78 @@
 import React, { Component } from "react";
 import ColorSelector from "./ColorSelector";
+import LineWidthSelector from "./LineWidthSelector";
 
 class Canvas extends Component {
   state = {
     hex: "#0000FF",
+    lineWidth: 2,
     width: 400,
     height: 400,
     coords: null
   };
 
+  // Constructor required for DOM Ref
   constructor(props) {
     super(props);
     this.canvasRef = React.createRef();
     this.context = null;
   }
 
+  // ***** Lifecycle *****
+
+  componentDidMount() {
+    this.context = this.canvasRef.current.getContext("2d");
+  }
+
+  componentDidUpdate() {
+    // console.log("Canvas state: ", this.state);
+    this.setContext();
+  }
+
+  setContext() {
+    this.context = this.canvasRef.current.getContext("2d");
+    this.context.strokeStyle = this.state.hex;
+    this.context.lineJoin = "round";
+    this.context.lineWidth = this.state.lineWidth;
+  }
+
+  // ***** Set Up Controls *****
+
   // Callback for Lifting State to Parent
   onColorSelectorChange = hex => {
     this.setState({ hex });
   };
 
-  // componentDidMount() {
-  //   console.log(this.canvasRef);
-  // }
+  onLineWidthChange = lineWidth => {
+    this.setState({ lineWidth });
+  };
 
-  componentDidUpdate() {
-    console.log("Canvas state: ", this.state);
-    this.setContext();
-  }
+  onClearButtonClick = () => {
+    this.context.clearRect(
+      0,
+      0,
+      this.context.canvas.width,
+      this.context.canvas.height
+    );
+  };
 
-  // Creates "pencil"
-  setContext() {
-    this.context = this.canvasRef.current.getContext("2d");
-    this.context.strokeStyle = this.state.hex;
-    this.context.lineJoin = "round";
-    this.context.lineWidth = 3;
-  }
+  onSaveButtonClick = () => {
+    const canvasData = this.canvasRef.current.toDataURL();
+    localStorage.setItem("canvas0", canvasData);
+  };
+
+  onLoadButtonClick = () => {
+    const savedImageData = localStorage.getItem("canvas0");
+    if (savedImageData !== null) {
+      const imageObj = new Image();
+      imageObj.onload = () => {
+        this.context.drawImage(imageObj, 0, 0);
+      };
+      imageObj.src = savedImageData;
+    }
+  };
+
+  // ***** Canvas Events *****
 
   onCanvasMouseDown = event => {
     const x = event.nativeEvent.offsetX;
@@ -47,7 +84,7 @@ class Canvas extends Component {
     this.setState({ coords: null });
   };
 
-  // onCanvasMouseLeave ? to handle bug when too fast
+  // onCanvasMouseLeave ? to handle bug when quickly leaving in/out
 
   onCanvasMouseMove = event => {
     const x = event.nativeEvent.offsetX;
@@ -78,7 +115,16 @@ class Canvas extends Component {
             hex={hex}
             onColorSelectorChange={this.onColorSelectorChange}
           />
+
+          <LineWidthSelector onLineWidthChange={this.onLineWidthChange} />
+
+          <button onClick={this.onClearButtonClick}>Clear Canvas</button>
+
+          <button onClick={this.onSaveButtonClick}>Save Canvas</button>
+
+          <button onClick={this.onLoadButtonClick}>Load Previous Canvas</button>
         </div>
+
         <canvas
           ref={this.canvasRef}
           width={width}

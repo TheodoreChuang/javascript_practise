@@ -16,6 +16,10 @@ class App extends Component {
     });
   };
 
+  componentDidUpdate() {
+    console.log(this.state.entries);
+  }
+
   render() {
     const { categories } = this.state;
 

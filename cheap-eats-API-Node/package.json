@@ -11,7 +11,6 @@
   },
   "jest": {
     "testEnvironment": "node",
-    "globalSetup": "./tests/setup.js",
     "globalTeardown": "./tests/teardown.js"
   },
   "author": "",

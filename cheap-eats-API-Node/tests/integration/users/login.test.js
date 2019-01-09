@@ -13,20 +13,28 @@ beforeAll(() => {
   mongoose.connection.on("error", err => console.log(err));
 });
 
-describe("Show the details of an user", () => {
-  test("respond with 200", async () => {
-    const user = await UserModel.findOne();
+const user0 = {
+  email: "user0@mail.com",
+  password: "password"
+};
 
-    supertest(app)
-      .get(`/api/user/`)
+describe("/login an existing user", () => {
+  test("respond with JWT and status 200", async () => {
+    const response = await supertest(app)
+      .post(`/api/user/`)
+      .send(user0)
       .expect("Content-Type", /json/)
       .expect(200);
+
+    // expect(response.text).toBe("Unauthorized");
   });
 
-  test("returns details of an user", async () => {
-    const user = await UserModel.findOne();
+  test("respond with 401 if email or password do not match ", async () => {
+    const response = await supertest(app)
+      .post(`/api/user/`)
+      .send(user0)
+      .expect(401);
 
-    const response = await supertest(app).get(`/api/user/`);
-    expect(response).toBeTruthy();
+    expect(response.text).toBe("Unauthorized");
   });
 });

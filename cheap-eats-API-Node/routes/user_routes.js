@@ -11,11 +11,8 @@ router.use("/user", passport.authenticate("jwt", { session: false }));
 router
   .route("/user")
   // GET /user //user information
-  // checkJwt required
   .get(UserController.show)
-
   // PUT/PATCH /user //update user information
-  // checkJwt required
   .put(UserController.update)
   .patch(UserController.update);
 
