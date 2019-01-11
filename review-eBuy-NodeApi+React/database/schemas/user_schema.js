@@ -12,7 +12,11 @@ const UserSchema = new Schema({
     required: true,
     trim: true
   },
-  orders: [OrderSchema]
+  orders: [OrderSchema],
+  stripeCustomerId: {
+    type: String,
+    required: true
+  }
 });
 
 UserSchema.plugin(passportLocalMongoose, { usernameField: "email" });
