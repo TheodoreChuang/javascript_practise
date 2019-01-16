@@ -1,16 +1,16 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 # Challenges
-*x Implement a logout button.
-*x Create a way for a user to login. (passport-local-mongoose)
+* x Implement a logout button.
+* x Create a way for a user to login. (passport-local-mongoose)
   * Handle incorrect login better
-*x Display all of the users bookmarks in <BookmarksPage> (url should be clickable)
+* x Display all of the users bookmarks in <BookmarksPage> (url should be clickable)
 (* Move Auth into Navbar)
-*x Refactor with Redux
+* x Refactor User State with Redux
 
 # Beast Mode
-*x Allow a user to delete a bookmark
-*x Allow a user to edit a bookmark
+* x Allow a user to delete a bookmark, then refactor with Redux
+* Allow a user to edit a bookmark, then refactor with Redux
 * Handle JWT expiry (redux)
 
 # Beast Mode+

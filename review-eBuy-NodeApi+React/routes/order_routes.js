@@ -7,12 +7,12 @@ router.post(
   "/",
   celebrate({
     body: {
-      // deliveryAddress: Joi.string(),
-      // products: Joi.array()
-      //   .items(Joi.string())
-      //   .min(1)
-      //   .required(),
-      // stripeToken: Joi.string().required()
+      stripeToken: Joi.string().required(),
+      deliveryAddress: Joi.string(),
+      products: Joi.array()
+        .items(Joi.string())
+        .min(1)
+        .required()
     }
   }),
   OrderController.create

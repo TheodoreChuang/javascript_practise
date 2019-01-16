@@ -4,9 +4,9 @@ async function getCustomerIdByEmail(email) {
   let customer = getCustomerByEmail(email);
 
   if (!customer) {
-    const customer = await stripe.customers.create({ email });
+    customer = await stripe.customers.create({ email });
   }
-  return customer._id;
+  return customer.id;
 }
 
 async function getCustomerByEmail(email) {
@@ -19,4 +19,23 @@ async function getCustomerById(id) {
   return customer;
 }
 
-module.exports = { getCustomerIdByEmail, getCustomerByEmail, getCustomerById };
+async function createChargeForCustomer(amount, customer) {
+  const charge = await stripe.charges.create({
+    amount,
+    customer,
+    currency: "AUD"
+  });
+  return charge;
+}
+
+async function updateCustomer(customer, options) {
+  return await stripe.customers.update(customer, options);
+}
+
+module.exports = {
+  getCustomerIdByEmail,
+  getCustomerByEmail,
+  getCustomerById,
+  createChargeForCustomer,
+  updateCustomer
+};

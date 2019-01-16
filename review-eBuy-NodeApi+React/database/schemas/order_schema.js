@@ -6,7 +6,11 @@ const OrderSchema = new Schema({
     type: String,
     required: true
   },
-  products: [ProductSchema]
+  products: [ProductSchema],
+  chargeId: {
+    type: String,
+    required: true
+  }
 });
 
 module.exports = OrderSchema;

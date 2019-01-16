@@ -1,4 +1,5 @@
 // Action Creator returns Action
+
 import LocalApi from "./../apis/local";
 
 export const setAuthToken = token => {
@@ -26,6 +27,17 @@ export const fetchBookmarks = () => {
 export const createBookmark = ({ title, url }) => {
   return async (dispatch, getState) => {
     const response = await LocalApi.post("/bookmarks", { title, url });
+
+    dispatch({
+      type: "BOOKMARKS_LIST",
+      payload: response.data
+    });
+  };
+};
+
+export const updateBookmark = ({ _id, title, url }) => {
+  return async (dispatch, getState) => {
+    const response = await LocalApi.put(`/bookmarks/${_id}`, { title, url });
 
     dispatch({
       type: "BOOKMARKS_LIST",
